@@ -14,22 +14,33 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
+import java.rmi.RemoteException;
+
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
+
+import cali.se.lu.ics.www.Event;
+import cali.se.lu.ics.www.EventkalenderServiceSoapProxy;
+import cali.se.lu.ics.www.Nation;
+import cali.se.lu.ics.www.Person;
+import java.awt.TextArea;
+import javax.swing.JTextPane;
 
 
 public class JavaApp {
 
+	private EventkalenderServiceSoapProxy eventProxy;
+	
 	private JFrame frame;
 	private String NameC;
 	private String NameCA;
-	private String[] Singular = {"Nation", "Event", "Student"};
-	private String[] Plural = {"Nationer", "Events", "Studenter"};
-	private String[] CBMetadata = {"Nationer", "Events", "Studenter"};
-	private String[] CBData = {"Nationer", "Events", "Studenter"};
-	private JComboBox J = new JComboBox (Singular);
-	private JComboBox JI = new JComboBox (Plural);
+	private String[] SelectionList = {"Nation", "Nationer", "Person", "Personer", "Event", "Events"};
+	private String[] CBMetadata = {"Anställda", "Tabeller", "Tabell-begränsningar", "Nycklar", "Index", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro", "Anställningskolumner", "Anställningssetup"};
+	private String[] CBData = {"Anställda", "Sjukaste Personen", "Sjukaste personen/år", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningfrånvaro", "Anställningssetup"};
+	private JComboBox J = new JComboBox (SelectionList);
 	private JButton B = new JButton("Hämta");
+	private JTextField txtId;
 
 	/**
 	 * Launch the application.
@@ -52,8 +63,11 @@ public class JavaApp {
 	 */
 	public JavaApp() {
 		initialize();
+		
+		eventProxy = new EventkalenderServiceSoapProxy();
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -69,101 +83,219 @@ public class JavaApp {
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Eventkalender ws", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		final JComboBox UserSelectionBox = new JComboBox(SelectionList);
+		UserSelectionBox.setBounds(153, 29, 215, 26);
+		panel_1.add(UserSelectionBox);
+		
+		
+		final JTextArea txtOutput = new JTextArea();
+		txtOutput.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		txtOutput.setBounds(29, 222, 461, 128);
+		panel_1.add(txtOutput);
 		
 		JButton B = new JButton("Hämta");
-		B.setBounds(79, 92, 117, 29);
+		B.setBounds(206, 127, 110, 30);
 		B.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    JButton source = (JButton) e.getSource();
-				String buttonText = source.getText();
-				JOptionPane.showMessageDialog(null, "Du kommer nu att " + buttonText);
-			}
+				
+		        String userSelection = (String) UserSelectionBox.getSelectedItem();
+		 
+		        if (userSelection.equals("Nation")) {
+		        	if(txtId.getText().equals("")) {
+		        		txtOutput.setText("Var god fyll i ID-fältet!");
+		        		return;
+		        	}
+		        	int id = Integer.parseInt(txtId.getText());
+		        	try {
+						Nation n = eventProxy.getNation(id);
+						if (n != null) {
+							txtOutput.setText("Du har valt: " + n.getName());
+						} else {
+							txtOutput.setText("Nation med ID " + id + " finns inte");
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		        }
+	        	else if (userSelection.equals("Event")) {
+		        	if(txtId.getText().equals("")) {
+		        		txtOutput.setText("Var god fyll i ID-fältet!");
+		        		return;
+		        	}
+		        	int id = Integer.parseInt(txtId.getText());
+		        	
+		        	try {
+						Event event = eventProxy.getEvent(id);
+						txtOutput.setText("Du har valt: " + event.getName());
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		        }
+	        	else if (userSelection.equals("Person")) {
+					if(txtId.getText().equals("")) {
+		        		txtOutput.setText("Var god fyll i ID-fältet!");
+		        		return;
+		        	}
+					
+					int id = Integer.parseInt(txtId.getText());
+		        	
+		        	try {
+						Person p = eventProxy.getPerson(id);
+						txtOutput.setText("Du har valt: " + p.getFirstName() + " " + p.getLastName());
+						} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        	}
+	        	else if (userSelection.equals("Nationer")) {
+		        	try {
+						Nation[] nationer = eventProxy.getNations();
+						
+						String output = "Alla nationer: ";
+						
+						for (int i = 0; i < nationer.length; i++) {
+							output += System.lineSeparator();
+							output += nationer[i].getName();
+						}
+						txtOutput.setText(output);
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        	}
+	        	else if (userSelection.equals("Events")) {
+		        	try {
+						Event[] events = eventProxy.getEvents();
+						
+						String output = "Alla events: ";
+						
+						for (int i = 0; i < events.length; i++) {
+							output += System.lineSeparator();
+							output += events[i].getName();
+						}
+						txtOutput.setText(output);
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        	}
+	        	else if (userSelection.equals("Personer")) {
+		        	try {
+						Person[] personer = eventProxy.getPersons();
+						
+						String output = "Alla personer: ";
+						
+						for (int i = 0; i < personer.length; i++) {
+							output += System.lineSeparator();
+							output += personer[i].getFirstName() + " " + personer[i].getLastName();
+						}
+						txtOutput.setText(output);
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        	}
+	        }
 		});
-		panel_1.setLayout(null);
 		panel_1.add(B);
+		JLabel VarGodVälj = new JLabel("Var god välj:");
+		VarGodVälj.setBounds(52, 34, 99, 16);
+		VarGodVälj.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		panel_1.add(VarGodVälj);
 		
+		txtId = new JTextField();
+		txtId.setBounds(153, 79, 86, 20);
+		panel_1.add(txtId);
+		txtId.setColumns(10);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(29, 222, 461, 128);
-		panel_1.add(textArea_1);
-		
-		JComboBox comboBox = new JComboBox(Singular);
-		comboBox.setBounds(65, 17, 160, 51);
-		panel_1.add(comboBox);
-		comboBox.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent event) {
-		        JComboBox<String> combo = (JComboBox<String>) event.getSource();
-		        String selectedBook = (String) combo.getSelectedItem();
-		 
-		        if (selectedBook.equals("Nation")) {
-		            System.out.println("wtf man");
-		        } else if (selectedBook.equals("Event")) {
-		            System.out.println("Hamps you shall obey!");
-		        }
-		    }
-		});
-		
-		
-		JButton button = new JButton("Hämta");
-		button.setBounds(345, 92, 117, 29);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_1.add(button);
-		
-		JComboBox comboBox_1 = new JComboBox(Plural);
-		comboBox_1.setBounds(335, 17, 169, 51);
-		panel_1.add(comboBox_1);
-		comboBox_1.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent event) {
-		        JComboBox<String> combo = (JComboBox<String>) event.getSource();
-		        String selectedBook = (String) combo.getSelectedItem();
-		 
-		        if (selectedBook.equals("Nationer")) {
-		            System.out.println("Nice one Hamps");
-		        } else if (selectedBook.equals("Events")) {
-		            System.out.println("Too bad");
-		        }
-		    }
-		});
-		JLabel lblVljEn = new JLabel("Välj en");
-		lblVljEn.setBounds(12, 33, 61, 16);
-		lblVljEn.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_1.add(lblVljEn);
-		
-		JLabel lblVljFlera = new JLabel("Välj flera");
-		lblVljFlera.setBounds(272, 33, 61, 16);
-		lblVljFlera.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_1.add(lblVljFlera);
+		JLabel IDnr = new JLabel("ID nr:");
+		IDnr.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		IDnr.setBounds(52, 81, 57, 14);
+		panel_1.add(IDnr);
 		
 		
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Databas ws", null, panel, null);
-		panel.setLayout(null);
+		JPanel CronusPanel = new JPanel();
+		tabbedPane.addTab("Databas ws", null, CronusPanel, null);
+		CronusPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setBounds(0, 0, 529, 382);
-		panel.add(tabbedPane_1);
+		CronusPanel.add(tabbedPane_1);
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane_1.addTab("Data", null, panel_3, null);
 		panel_3.setLayout(null);
 		
-		JComboBox Data_Combobox = new JComboBox(CBData);
-		Data_Combobox.setBounds(163, 19, 164, 27);
+		final JComboBox Data_Combobox = new JComboBox(CBData);
+		Data_Combobox.setBounds(177, 20, 165, 27);
 		panel_3.add(Data_Combobox);
+		
+		JButton btnNewButton = new JButton("Hämta");
+		btnNewButton.setBounds(215, 65, 90, 28);
+		panel_3.add(btnNewButton);
+		B.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+		        String userSelection = (String) Data_Combobox.getSelectedItem();
+		        if (userSelection.equals("Sjukaste personen")) {
+		        	if(txtId.getText().equals("")) {
+		        		txtOutput.setText("Var god fyll i ID-fältet!");
+		        		return;
+		        	}
+		        	boolean isInt = Metoder.isStringInt(txtId.getText());
+		        	if (!isInt) {
+		        		txtOutput.setText("Ange giltigt heltal");
+		        	}
+		        	int id = Integer.parseInt(txtId.getText());
+		        	try {
+						Nation n = eventProxy.getNation(id);
+						if (n != null) {
+							txtOutput.setText("Du har valt: " + n.getName());
+						} else {
+							txtOutput.setText("Nation med ID " + id + " finns inte");
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		        }
+			}
+		});
+		        
+		
+		
+		
+		TextArea textArea = new TextArea();
+		textArea.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		textArea.setBounds(31, 178, 460, 166);
+		panel_3.add(textArea);
 		
 		JPanel PanelMetadata = new JPanel();
 		tabbedPane_1.addTab("Metadata", null, PanelMetadata, null);
 		PanelMetadata.setLayout(null);
 		
 		JComboBox Metadata_ComboBox = new JComboBox(CBMetadata);
-		Metadata_ComboBox.setBounds(177, 17, 164, 27);
+		Metadata_ComboBox.setBounds(177, 20, 165, 27);
 		PanelMetadata.add(Metadata_ComboBox);
+		
+		JButton btnNewButton_1 = new JButton("Hämta");
+		btnNewButton_1.setBounds(215, 65, 90, 28);
+		PanelMetadata.add(btnNewButton_1);
+		
+		TextArea textArea_1 = new TextArea();
+		textArea_1.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		textArea_1.setBounds(31, 178, 460, 166);
+		PanelMetadata.add(textArea_1);
 		
 		
 	

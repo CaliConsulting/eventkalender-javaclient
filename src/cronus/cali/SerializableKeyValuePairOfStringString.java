@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package cali.se.lu.ics.www;
+package cronus.cali;
 
 public class SerializableKeyValuePairOfStringString  implements java.io.Serializable {
     private java.lang.String key;
@@ -106,17 +106,17 @@ public class SerializableKeyValuePairOfStringString  implements java.io.Serializ
         new org.apache.axis.description.TypeDesc(SerializableKeyValuePairOfStringString.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "SerializableKeyValuePairOfStringString"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cali.cronus/", "SerializableKeyValuePairOfStringString"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("key");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Key"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.cronus/", "Key"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("value");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Value"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.cronus/", "Value"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

@@ -1,8 +1,8 @@
-package cali.se.lu.ics.www;
+package eventkalender.cali;
 
-public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.EventkalenderServiceSoap {
+public class EventkalenderServiceSoapProxy implements eventkalender.cali.EventkalenderServiceSoap {
   private String _endpoint = null;
-  private cali.se.lu.ics.www.EventkalenderServiceSoap eventkalenderServiceSoap = null;
+  private eventkalender.cali.EventkalenderServiceSoap eventkalenderServiceSoap = null;
   
   public EventkalenderServiceSoapProxy() {
     _initEventkalenderServiceSoapProxy();
@@ -15,7 +15,7 @@ public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.Eventka
   
   private void _initEventkalenderServiceSoapProxy() {
     try {
-      eventkalenderServiceSoap = (new cali.se.lu.ics.www.EventkalenderServiceLocator()).getEventkalenderServiceSoap();
+      eventkalenderServiceSoap = (new eventkalender.cali.EventkalenderServiceLocator()).getEventkalenderServiceSoap();
       if (eventkalenderServiceSoap != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)eventkalenderServiceSoap)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,7 +38,7 @@ public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.Eventka
     
   }
   
-  public cali.se.lu.ics.www.EventkalenderServiceSoap getEventkalenderServiceSoap() {
+  public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap() {
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap;
@@ -56,13 +56,13 @@ public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.Eventka
     eventkalenderServiceSoap.addFile(path, content);
   }
   
-  public cali.se.lu.ics.www.Nation getNation(int id) throws java.rmi.RemoteException{
+  public eventkalender.cali.Nation getNation(int id) throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getNation(id);
   }
   
-  public cali.se.lu.ics.www.Nation[] getNations() throws java.rmi.RemoteException{
+  public eventkalender.cali.Nation[] getNations() throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getNations();
@@ -80,13 +80,13 @@ public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.Eventka
     eventkalenderServiceSoap.addEvent(name, summary, startTime, endTime, nationId);
   }
   
-  public cali.se.lu.ics.www.Event getEvent(int id) throws java.rmi.RemoteException{
+  public eventkalender.cali.Event getEvent(int id) throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getEvent(id);
   }
   
-  public cali.se.lu.ics.www.Event[] getEvents() throws java.rmi.RemoteException{
+  public eventkalender.cali.Event[] getEvents() throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getEvents();
@@ -98,13 +98,13 @@ public class EventkalenderServiceSoapProxy implements cali.se.lu.ics.www.Eventka
     eventkalenderServiceSoap.addPerson(firstName, lastName);
   }
   
-  public cali.se.lu.ics.www.Person getPerson(int id) throws java.rmi.RemoteException{
+  public eventkalender.cali.Person getPerson(int id) throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getPerson(id);
   }
   
-  public cali.se.lu.ics.www.Person[] getPersons() throws java.rmi.RemoteException{
+  public eventkalender.cali.Person[] getPersons() throws java.rmi.RemoteException{
     if (eventkalenderServiceSoap == null)
       _initEventkalenderServiceSoapProxy();
     return eventkalenderServiceSoap.getPersons();

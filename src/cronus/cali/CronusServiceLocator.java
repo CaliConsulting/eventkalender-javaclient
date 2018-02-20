@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package cali.se.lu.ics.www;
+package cronus.cali;
 
-public class CronusServiceLocator extends org.apache.axis.client.Service implements cali.se.lu.ics.www.CronusService {
+public class CronusServiceLocator extends org.apache.axis.client.Service implements cronus.cali.CronusService {
 
     public CronusServiceLocator() {
     }
@@ -22,7 +22,7 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
     }
 
     // Use to get a proxy class for CronusServiceSoap
-    private java.lang.String CronusServiceSoap_address = "http://localhost:52314/CronusService.asmx";
+    private java.lang.String CronusServiceSoap_address = "http://localhost/EventkalenderWS/CronusService.asmx";
 
     public java.lang.String getCronusServiceSoapAddress() {
         return CronusServiceSoap_address;
@@ -39,7 +39,7 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
         CronusServiceSoapWSDDServiceName = name;
     }
 
-    public cali.se.lu.ics.www.CronusServiceSoap getCronusServiceSoap() throws javax.xml.rpc.ServiceException {
+    public cronus.cali.CronusServiceSoap getCronusServiceSoap() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(CronusServiceSoap_address);
@@ -50,9 +50,9 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
         return getCronusServiceSoap(endpoint);
     }
 
-    public cali.se.lu.ics.www.CronusServiceSoap getCronusServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public cronus.cali.CronusServiceSoap getCronusServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            cali.se.lu.ics.www.CronusServiceSoapStub _stub = new cali.se.lu.ics.www.CronusServiceSoapStub(portAddress, this);
+            cronus.cali.CronusServiceSoapStub _stub = new cronus.cali.CronusServiceSoapStub(portAddress, this);
             _stub.setPortName(getCronusServiceSoapWSDDServiceName());
             return _stub;
         }
@@ -72,8 +72,8 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (cali.se.lu.ics.www.CronusServiceSoap.class.isAssignableFrom(serviceEndpointInterface)) {
-                cali.se.lu.ics.www.CronusServiceSoapStub _stub = new cali.se.lu.ics.www.CronusServiceSoapStub(new java.net.URL(CronusServiceSoap_address), this);
+            if (cronus.cali.CronusServiceSoap.class.isAssignableFrom(serviceEndpointInterface)) {
+                cronus.cali.CronusServiceSoapStub _stub = new cronus.cali.CronusServiceSoapStub(new java.net.URL(CronusServiceSoap_address), this);
                 _stub.setPortName(getCronusServiceSoapWSDDServiceName());
                 return _stub;
             }
@@ -105,7 +105,7 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "CronusService");
+        return new javax.xml.namespace.QName("http://cali.cronus/", "CronusService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class CronusServiceLocator extends org.apache.axis.client.Service impleme
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "CronusServiceSoap"));
+            ports.add(new javax.xml.namespace.QName("http://cali.cronus/", "CronusServiceSoap"));
         }
         return ports.iterator();
     }

@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package cali.se.lu.ics.www;
+package eventkalender.cali;
 
-public class EventkalenderServiceLocator extends org.apache.axis.client.Service implements cali.se.lu.ics.www.EventkalenderService {
+public class EventkalenderServiceLocator extends org.apache.axis.client.Service implements eventkalender.cali.EventkalenderService {
 
     public EventkalenderServiceLocator() {
     }
@@ -39,7 +39,7 @@ public class EventkalenderServiceLocator extends org.apache.axis.client.Service 
         EventkalenderServiceSoapWSDDServiceName = name;
     }
 
-    public cali.se.lu.ics.www.EventkalenderServiceSoap getEventkalenderServiceSoap() throws javax.xml.rpc.ServiceException {
+    public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(EventkalenderServiceSoap_address);
@@ -50,9 +50,9 @@ public class EventkalenderServiceLocator extends org.apache.axis.client.Service 
         return getEventkalenderServiceSoap(endpoint);
     }
 
-    public cali.se.lu.ics.www.EventkalenderServiceSoap getEventkalenderServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            cali.se.lu.ics.www.EventkalenderServiceSoapStub _stub = new cali.se.lu.ics.www.EventkalenderServiceSoapStub(portAddress, this);
+            eventkalender.cali.EventkalenderServiceSoapStub _stub = new eventkalender.cali.EventkalenderServiceSoapStub(portAddress, this);
             _stub.setPortName(getEventkalenderServiceSoapWSDDServiceName());
             return _stub;
         }
@@ -72,8 +72,8 @@ public class EventkalenderServiceLocator extends org.apache.axis.client.Service 
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (cali.se.lu.ics.www.EventkalenderServiceSoap.class.isAssignableFrom(serviceEndpointInterface)) {
-                cali.se.lu.ics.www.EventkalenderServiceSoapStub _stub = new cali.se.lu.ics.www.EventkalenderServiceSoapStub(new java.net.URL(EventkalenderServiceSoap_address), this);
+            if (eventkalender.cali.EventkalenderServiceSoap.class.isAssignableFrom(serviceEndpointInterface)) {
+                eventkalender.cali.EventkalenderServiceSoapStub _stub = new eventkalender.cali.EventkalenderServiceSoapStub(new java.net.URL(EventkalenderServiceSoap_address), this);
                 _stub.setPortName(getEventkalenderServiceSoapWSDDServiceName());
                 return _stub;
             }
@@ -105,7 +105,7 @@ public class EventkalenderServiceLocator extends org.apache.axis.client.Service 
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "EventkalenderService");
+        return new javax.xml.namespace.QName("http://cali.eventkalender/", "EventkalenderService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class EventkalenderServiceLocator extends org.apache.axis.client.Service 
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "EventkalenderServiceSoap"));
+            ports.add(new javax.xml.namespace.QName("http://cali.eventkalender/", "EventkalenderServiceSoap"));
         }
         return ports.iterator();
     }

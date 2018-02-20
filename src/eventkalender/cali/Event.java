@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package cali.se.lu.ics.www;
+package eventkalender.cali;
 
 public class Event  implements java.io.Serializable {
     private int id;
@@ -20,9 +20,9 @@ public class Event  implements java.io.Serializable {
 
     private int nationId;
 
-    private cali.se.lu.ics.www.Nation nation;
+    private eventkalender.cali.Nation nation;
 
-    private cali.se.lu.ics.www.Person[] persons;
+    private eventkalender.cali.Person[] persons;
 
     public Event() {
     }
@@ -34,8 +34,8 @@ public class Event  implements java.io.Serializable {
            java.util.Calendar startTime,
            java.util.Calendar endTime,
            int nationId,
-           cali.se.lu.ics.www.Nation nation,
-           cali.se.lu.ics.www.Person[] persons) {
+           eventkalender.cali.Nation nation,
+           eventkalender.cali.Person[] persons) {
            this.id = id;
            this.name = name;
            this.summary = summary;
@@ -172,7 +172,7 @@ public class Event  implements java.io.Serializable {
      * 
      * @return nation
      */
-    public cali.se.lu.ics.www.Nation getNation() {
+    public eventkalender.cali.Nation getNation() {
         return nation;
     }
 
@@ -182,7 +182,7 @@ public class Event  implements java.io.Serializable {
      * 
      * @param nation
      */
-    public void setNation(cali.se.lu.ics.www.Nation nation) {
+    public void setNation(eventkalender.cali.Nation nation) {
         this.nation = nation;
     }
 
@@ -192,7 +192,7 @@ public class Event  implements java.io.Serializable {
      * 
      * @return persons
      */
-    public cali.se.lu.ics.www.Person[] getPersons() {
+    public eventkalender.cali.Person[] getPersons() {
         return persons;
     }
 
@@ -202,7 +202,7 @@ public class Event  implements java.io.Serializable {
      * 
      * @param persons
      */
-    public void setPersons(cali.se.lu.ics.www.Person[] persons) {
+    public void setPersons(eventkalender.cali.Person[] persons) {
         this.persons = persons;
     }
 
@@ -286,59 +286,59 @@ public class Event  implements java.io.Serializable {
         new org.apache.axis.description.TypeDesc(Event.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Event"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://cali.eventkalender/", "Event"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("id");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Id"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Id"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("name");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Name"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Name"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("summary");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Summary"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Summary"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("startTime");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "StartTime"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "StartTime"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("endTime");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "EndTime"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "EndTime"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("nationId");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "NationId"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "NationId"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("nation");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Nation"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Nation"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Nation"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://cali.eventkalender/", "Nation"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("persons");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Persons"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Person"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Persons"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://cali.eventkalender/", "Person"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
-        elemField.setItemQName(new javax.xml.namespace.QName("http://www.ics.lu.se.cali/", "Person"));
+        elemField.setItemQName(new javax.xml.namespace.QName("http://cali.eventkalender/", "Person"));
         typeDesc.addFieldDesc(elemField);
     }
 

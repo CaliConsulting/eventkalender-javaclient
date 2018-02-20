@@ -1,8 +1,8 @@
-package cali.se.lu.ics.www;
+package cronus.cali;
 
-public class CronusServiceSoapProxy implements cali.se.lu.ics.www.CronusServiceSoap {
+public class CronusServiceSoapProxy implements cronus.cali.CronusServiceSoap {
   private String _endpoint = null;
-  private cali.se.lu.ics.www.CronusServiceSoap cronusServiceSoap = null;
+  private cronus.cali.CronusServiceSoap cronusServiceSoap = null;
   
   public CronusServiceSoapProxy() {
     _initCronusServiceSoapProxy();
@@ -15,7 +15,7 @@ public class CronusServiceSoapProxy implements cali.se.lu.ics.www.CronusServiceS
   
   private void _initCronusServiceSoapProxy() {
     try {
-      cronusServiceSoap = (new cali.se.lu.ics.www.CronusServiceLocator()).getCronusServiceSoap();
+      cronusServiceSoap = (new cronus.cali.CronusServiceLocator()).getCronusServiceSoap();
       if (cronusServiceSoap != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)cronusServiceSoap)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,7 +38,7 @@ public class CronusServiceSoapProxy implements cali.se.lu.ics.www.CronusServiceS
     
   }
   
-  public cali.se.lu.ics.www.CronusServiceSoap getCronusServiceSoap() {
+  public cronus.cali.CronusServiceSoap getCronusServiceSoap() {
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap;
@@ -74,91 +74,91 @@ public class CronusServiceSoapProxy implements cali.se.lu.ics.www.CronusServiceS
     return cronusServiceSoap.getColumnsForEmployeeTable();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[] getIllestPerson() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[] getIllestPerson() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getIllestPerson();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getIllPersonsByYear(int startYear, int endYear) throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getIllPersonsByYear(int startYear, int endYear) throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getIllPersonsByYear(startYear, endYear);
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeAndRelatives() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeAndRelatives() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeAndRelatives();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeAbsenceData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeAbsenceData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeAbsenceData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeRelativeData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeRelativeData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeRelativeData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeQualificationData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeQualificationData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeQualificationData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeePortalSetupData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeePortalSetupData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeePortalSetupData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeStatisticsGroupData() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeStatisticsGroupData() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeStatisticsGroupData();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeMetadata();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeAbsenceMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeAbsenceMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeAbsenceMetadata();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeRelativeMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeRelativeMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeRelativeMetadata();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeQualificationMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeQualificationMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeQualificationMetadata();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeePortalSetupMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeePortalSetupMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeePortalSetupMetadata();
   }
   
-  public cali.se.lu.ics.www.SerializableKeyValuePairOfStringString[][] getEmployeeStatisticsGroupMetadata() throws java.rmi.RemoteException{
+  public cronus.cali.SerializableKeyValuePairOfStringString[][] getEmployeeStatisticsGroupMetadata() throws java.rmi.RemoteException{
     if (cronusServiceSoap == null)
       _initCronusServiceSoapProxy();
     return cronusServiceSoap.getEmployeeStatisticsGroupMetadata();

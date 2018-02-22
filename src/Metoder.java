@@ -27,10 +27,14 @@ public class Metoder {
 			SerializableKeyValuePairOfStringString[] s = data[i];
 			for (int k = 0; k < s.length; k++) {
 				SerializableKeyValuePairOfStringString s1 = s[k];
+				if ( 1==1) {
+					s1.getKey();
 				output += System.lineSeparator();
-				output += s1.getKey() + s1.getValue();
+				output += "- " + s1.getValue();
 			}
+		 }
 		}
+	
 		return output;
 	}
 	

@@ -41,8 +41,8 @@ public class JavaApp {
 	private String NameC;
 	private String NameCA;
 	private String[] SelectionList = {"Nation", "Nationer", "Person", "Personer", "Event", "Events"};
-	private String[] CBMetadata = {"Anställda", "Tabeller", "Tabell-begränsningar", "Nycklar", "Index", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro", "Anställningskolumner", "Anställningssetup"};
-	private String[] CBData = {"Anställda", "Sjukaste Personen", "Sjukaste personen år 2004-2005", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro", "Anställningssetup"};
+	private String[] CBMetadata = {"Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro", "Kolumner för anställningstabeller", "Anställningssetup"};
+	private String[] CBData = {"Anställda", "Sjukaste personen", "Sjukaste personen år 2004-2005", "Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro", "Anställningssetup"};
 	private JComboBox J = new JComboBox (SelectionList);
 	private JButton B = new JButton("Hämta");
 	private JTextField txtId;
@@ -258,18 +258,18 @@ public class JavaApp {
 		tabbedPane_1.setBounds(0, 0, 529, 382);
 		CronusPanel.add(tabbedPane_1);
 		
-		JPanel panel_3 = new JPanel();
-		tabbedPane_1.addTab("Data", null, panel_3, null);
-		panel_3.setLayout(null);
+		JPanel panel_Data = new JPanel();
+		tabbedPane_1.addTab("Data", null, panel_Data, null);
+		panel_Data.setLayout(null);
 		
 		final JComboBox Data_Combobox = new JComboBox(CBData);
 		Data_Combobox.setBounds(150, 23, 215, 26);
-		panel_3.add(Data_Combobox);
+		panel_Data.add(Data_Combobox);
 		
 		final TextArea txtOutPutData = new TextArea();
 		txtOutPutData.setBounds(31, 187, 460, 157);
 		txtOutPutData.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		panel_3.add(txtOutPutData);
+		panel_Data.add(txtOutPutData);
 		
 		JButton btnNewButton = new JButton("Hämta");
 		btnNewButton.setBounds(198, 143, 110, 30);
@@ -304,9 +304,16 @@ public class JavaApp {
 		         
 		         else if (CronusSelection.equals("Anställningsrelationer")) {
 			        	try {
-							SerializableKeyValuePairOfStringString[][] employeeRelativeData = cronusProxy.getEmployeeRelativeData();
 							
-							txtOutPutData.setText("Data om anställninsstatistik: " + employeeRelativeData);
+			        		SerializableKeyValuePairOfStringString[][] employeeRelativeData = cronusProxy.getEmployeeRelativeData();
+							String output = "Data om anställningsrelationer: " + employeeRelativeData;
+						
+							for (int i = 0; i < employeeRelativeData.length; i++) {
+								output += System.lineSeparator();
+								output += employeeRelativeData[i].getClass();
+							}
+							txtOutPutData.setText(output);
+							
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -338,8 +345,7 @@ public class JavaApp {
 		         else  if (CronusSelection.equals("Anställningssetup")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeSetupData = cronusProxy.getEmployeePortalSetupData();
-							
-							txtOutPutData.setText("Data om Anställningssetup: " + employeeSetupData);
+								txtOutPutData.setText("Data om Anställningssetup: " + employeeSetupData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -348,8 +354,8 @@ public class JavaApp {
 		         
 		         else if (CronusSelection.equals("Sjukaste personen år 2004-2005")) {
 			        	try {
-			        		SerializableKeyValuePairOfStringString[][] SjukastPersonEfterÅr = cronusProxy.getIllPersonsByYear(2004, 2005);
-								txtOutPutData.setText("Sjukaste personen år 2004-2005: " + SjukastPersonEfterÅr);
+			        		SerializableKeyValuePairOfStringString[][] sjukastPersonEfterÅr = cronusProxy.getIllPersonsByYear(2004, 2005);
+								txtOutPutData.setText("Sjukaste personen år 2004-2005: " + sjukastPersonEfterÅr);
 						} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -358,8 +364,8 @@ public class JavaApp {
      
 		         else if (CronusSelection.equals("Sjukaste personen")) {
 		        	try {
-		        		SerializableKeyValuePairOfStringString[] SjukastPerson = cronusProxy.getIllestPerson();
-							txtOutPutData.setText("Sjukaste personen: " + SjukastPerson);
+		        		SerializableKeyValuePairOfStringString[] sjukastPerson = cronusProxy.getIllestPerson();
+							txtOutPutData.setText("Sjukaste personen: " + sjukastPerson);
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -368,50 +374,50 @@ public class JavaApp {
 			}
 				
 		});
-		panel_3.add(btnNewButton);
+		panel_Data.add(btnNewButton);
 		
 		JLabel lblNewLabel_1 = new JLabel("Var god välj");
 		lblNewLabel_1.setBounds(50, 25, 90, 20);
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		panel_3.add(lblNewLabel_1);
+		panel_Data.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Start year:");
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_2.setBounds(73, 75, 67, 18);
-		panel_3.add(lblNewLabel_2);
+		panel_Data.add(lblNewLabel_2);
 		
 		JLabel lblEndYear = new JLabel("End year:");
 		lblEndYear.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblEndYear.setBounds(301, 100, 67, 18);
-		panel_3.add(lblEndYear);
+		panel_Data.add(lblEndYear);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
 		textField_3.setBounds(387, 75, 86, 20);
-		panel_3.add(textField_3);
+		panel_Data.add(textField_3);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
 		textField_4.setBounds(387, 100, 86, 20);
-		panel_3.add(textField_4);
+		panel_Data.add(textField_4);
 		
-		JPanel PanelMetadata = new JPanel();
-		tabbedPane_1.addTab("Metadata", null, PanelMetadata, null);
-		PanelMetadata.setLayout(null);
+		JPanel Panel_Metadata = new JPanel();
+		tabbedPane_1.addTab("Metadata", null, Panel_Metadata, null);
+		Panel_Metadata.setLayout(null);
 		
 		final JComboBox Metadata_Combobox = new JComboBox(CBMetadata);
 		Metadata_Combobox.setBounds(155, 29, 215, 26);
-		PanelMetadata.add(Metadata_Combobox);
+		Panel_Metadata.add(Metadata_Combobox);
 		
 		final TextArea txtOutPutMetadata = new TextArea();
 		txtOutPutMetadata.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		txtOutPutMetadata.setBounds(31, 178, 460, 166);
-		PanelMetadata.add(txtOutPutMetadata);
+		Panel_Metadata.add(txtOutPutMetadata);
 	
 		JButton Hämta_Metadata = new JButton("Hämta");
 		Hämta_Metadata.setBounds(209, 76, 110, 30);
-		PanelMetadata.add(Hämta_Metadata);
-		btnNewButton.addActionListener(new ActionListener() {
+		Panel_Metadata.add(Hämta_Metadata);
+		Hämta_Metadata.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 
@@ -421,7 +427,7 @@ public class JavaApp {
 		        	try {
 						SerializableKeyValuePairOfStringString[][] employeeData = cronusProxy.getEmployeeMetadata();
 						
-						txtOutPutData.setText("Data om anställda: " + employeeData);
+						txtOutPutMetadata.setText("Data om anställda: " + employeeData);
 		        	} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -429,72 +435,115 @@ public class JavaApp {
 		         }	
 		         
 		         
-		         if (MDCronusSelection.equals("Anställningsstatistik")) {
+		        else if (MDCronusSelection.equals("Anställningsstatistik")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeStatisticsData = cronusProxy.getEmployeeStatisticsGroupMetadata();
 							
-							txtOutPutData.setText("Data om anställninsstatistik: " + employeeStatisticsData);
+							txtOutPutMetadata.setText("Data om anställninsstatistik: " + employeeStatisticsData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		         
-		         if (MDCronusSelection.equals("Anställningsrelationer")) {
+		        else  if (MDCronusSelection.equals("Anställningsrelationer")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeRelativeData = cronusProxy.getEmployeeRelativeMetadata();
 							
-							txtOutPutData.setText("Data om anställninsstatistik: " + employeeRelativeData);
+							txtOutPutMetadata.setText("Data om anställningsrelationer: " + employeeRelativeData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		         
-		         if (MDCronusSelection.equals("Anställningskvalifikationer")) {
+		        else  if (MDCronusSelection.equals("Anställningskvalifikationer")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeQualificationData = cronusProxy.getEmployeeQualificationMetadata();
 							
-							txtOutPutData.setText("Data om anställninskvalifikationer: " + employeeQualificationData);
+							txtOutPutMetadata.setText("Data om anställninskvalifikationer: " + employeeQualificationData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		         
-		         if (MDCronusSelection.equals("Anställningsfrånvaro")) {
+		        else if (MDCronusSelection.equals("Anställningsfrånvaro")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeAbsenceData = cronusProxy.getEmployeeAbsenceMetadata();
 							
-							txtOutPutData.setText("Data om Anställningsfrånvaro: " + employeeAbsenceData);
+							txtOutPutMetadata.setText("Data om Anställningsfrånvaro: " + employeeAbsenceData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		         
-		         if (MDCronusSelection.equals("Anställningssetup")) {
+		        else if (MDCronusSelection.equals("Anställningssetup")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeSetupData = cronusProxy.getEmployeePortalSetupMetadata();
 							
-							txtOutPutData.setText("Data om Anställningssetup: " + employeeSetupData);
+							txtOutPutMetadata.setText("Data om Anställningssetup: " + employeeSetupData);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		         
-		         if (MDCronusSelection.equals("Tabeller")) {
+		        else if (MDCronusSelection.equals("Tabeller")) {
 			        	try {
-							SerializableKeyValuePairOfStringString[][] employeeAbsenceData = cronusProxy.getEmployeeAbsenceMetadata();
+							String[] tables = cronusProxy.getTables();
 							
-							txtOutPutData.setText("Data om Anställningsfrånvaro: " + employeeAbsenceData);
+							txtOutPutMetadata.setText("Data om alla tabeller: " + tables);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 			         }
 		        
+		        else if (MDCronusSelection.equals("Tabellbegränsningar")) {
+		        	try {
+						String[] tableConstraints = cronusProxy.getTableConstraints();
+						
+						txtOutPutMetadata.setText("Data om alla tabellbegränsningar: " + tableConstraints);
+		        	} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		         }
+		        
+		        else if (MDCronusSelection.equals("Kolumner för anställningstabeller")) {
+		        	try {
+						String[] columnsForEmployeeTable = cronusProxy.getColumnsForEmployeeTable();
+						
+						txtOutPutMetadata.setText("Kolumner för anställningstabeller: " + columnsForEmployeeTable);
+		        	} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		         }
+		        
+		        else if (MDCronusSelection.equals("Index")) {
+		        	try {
+						String[] indexes = cronusProxy.getIndexes();
+						
+						txtOutPutMetadata.setText("index: " + indexes);
+		        	} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		         }
+		        
+		        else if (MDCronusSelection.equals("Nycklar")) {
+		        	try {
+						String[] keys = cronusProxy.getKeys();
+						
+						txtOutPutMetadata.setText("index: " + keys);
+		        	} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		         }
 			}
 		});
 		

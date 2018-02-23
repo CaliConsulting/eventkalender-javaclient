@@ -118,9 +118,9 @@ public class App {
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String userSelection = (String) cmbEventkalenderChoice.getSelectedItem();
+				String selection = (String) cmbEventkalenderChoice.getSelectedItem();
 
-				if (userSelection.equals("Nation")) {
+				if (selection.equals("Nation")) {
 					if (txtEventkalenderId.getText().equals("")) {
 						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
@@ -141,7 +141,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if (userSelection.equals("Event")) {
+				} else if (selection.equals("Event")) {
 					if (txtEventkalenderId.getText().equals("")) {
 						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
@@ -163,7 +163,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if (userSelection.equals("Person")) {
+				} else if (selection.equals("Person")) {
 					if (txtEventkalenderId.getText().equals("")) {
 						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
@@ -185,7 +185,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if (userSelection.equals("Nationer")) {
+				} else if (selection.equals("Nationer")) {
 					try {
 						Nation[] nationer = eventProxy.getNations();
 
@@ -201,7 +201,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if (userSelection.equals("Events")) {
+				} else if (selection.equals("Events")) {
 					try {
 						Event[] events = eventProxy.getEvents();
 
@@ -217,7 +217,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				} else if (userSelection.equals("Personer")) {
+				} else if (selection.equals("Personer")) {
 					try {
 						Person[] personer = eventProxy.getPersons();
 
@@ -299,9 +299,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-
-				else if (selection.equals("Anställningsrelationer")) {
+				} else if (selection.equals("Anställningsrelationer")) {
 					try {
 						SerializableKeyValuePairOfStringString[][] employeeRelativeData = cronusProxy
 								.getEmployeeRelativeData();
@@ -310,9 +308,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-
-				else if (selection.equals("Anställningskvalifikationer")) {
+				} else if (selection.equals("Anställningskvalifikationer")) {
 					try {
 						SerializableKeyValuePairOfStringString[][] employeeQualificationData = cronusProxy
 								.getEmployeeQualificationData();
@@ -321,9 +317,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-
-				else if (selection.equals("Anställningsfrånvaro")) {
+				} else if (selection.equals("Anställningsfrånvaro")) {
 					try {
 						SerializableKeyValuePairOfStringString[][] employeeAbsenceData = cronusProxy
 								.getEmployeeAbsenceData();
@@ -332,9 +326,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-
-				else if (selection.equals("Anställningssetup")) {
+				} else if (selection.equals("Anställningssetup")) {
 					try {
 						SerializableKeyValuePairOfStringString[][] employeeSetupData = cronusProxy
 								.getEmployeePortalSetupData();
@@ -343,9 +335,7 @@ public class App {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-
-				else if (selection.equals("Sjukaste personen år 2004-2005")) {
+				} else if (selection.equals("Sjukaste personen år 2004-2005")) {
 					try {
 						SerializableKeyValuePairOfStringString[][] illPersonsByYear = cronusProxy
 								.getIllPersonsByYear(2004, 2005);

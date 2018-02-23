@@ -1,5 +1,5 @@
 /**
- * CronusServiceSoapStub.java
+ * CronusServiceSoap12Stub.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,7 +7,7 @@
 
 package cronus.cali;
 
-public class CronusServiceSoapStub extends org.apache.axis.client.Stub implements cronus.cali.CronusServiceSoap {
+public class CronusServiceSoap12Stub extends org.apache.axis.client.Stub implements cronus.cali.CronusServiceSoap {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -326,16 +326,16 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
 
     }
 
-    public CronusServiceSoapStub() throws org.apache.axis.AxisFault {
+    public CronusServiceSoap12Stub() throws org.apache.axis.AxisFault {
          this(null);
     }
 
-    public CronusServiceSoapStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public CronusServiceSoap12Stub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
          super.cachedEndpoint = endpointURL;
     }
 
-    public CronusServiceSoapStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public CronusServiceSoap12Stub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         if (service == null) {
             super.service = new org.apache.axis.client.Service();
         } else {
@@ -482,7 +482,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "UpdateEmployee"));
 
         setRequestHeaders(_call);
@@ -509,7 +509,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployee"));
 
         setRequestHeaders(_call);
@@ -543,7 +543,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployees"));
 
         setRequestHeaders(_call);
@@ -577,7 +577,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "AddEmployee"));
 
         setRequestHeaders(_call);
@@ -604,7 +604,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "DeleteEmployee"));
 
         setRequestHeaders(_call);
@@ -631,7 +631,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetKeys"));
 
         setRequestHeaders(_call);
@@ -665,7 +665,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetIndexes"));
 
         setRequestHeaders(_call);
@@ -699,7 +699,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetTableConstraints"));
 
         setRequestHeaders(_call);
@@ -733,7 +733,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetTables"));
 
         setRequestHeaders(_call);
@@ -767,7 +767,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetColumnsForEmployeeTable"));
 
         setRequestHeaders(_call);
@@ -801,7 +801,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetIllestPerson"));
 
         setRequestHeaders(_call);
@@ -835,7 +835,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetIllPersonsByYear"));
 
         setRequestHeaders(_call);
@@ -869,7 +869,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeAndRelatives"));
 
         setRequestHeaders(_call);
@@ -903,7 +903,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeData"));
 
         setRequestHeaders(_call);
@@ -937,7 +937,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeAbsenceData"));
 
         setRequestHeaders(_call);
@@ -971,7 +971,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeRelativeData"));
 
         setRequestHeaders(_call);
@@ -1005,7 +1005,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeQualificationData"));
 
         setRequestHeaders(_call);
@@ -1039,7 +1039,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeePortalSetupData"));
 
         setRequestHeaders(_call);
@@ -1073,7 +1073,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeStatisticsGroupData"));
 
         setRequestHeaders(_call);
@@ -1107,7 +1107,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeMetadata"));
 
         setRequestHeaders(_call);
@@ -1141,7 +1141,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeAbsenceMetadata"));
 
         setRequestHeaders(_call);
@@ -1175,7 +1175,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeRelativeMetadata"));
 
         setRequestHeaders(_call);
@@ -1209,7 +1209,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeQualificationMetadata"));
 
         setRequestHeaders(_call);
@@ -1243,7 +1243,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeePortalSetupMetadata"));
 
         setRequestHeaders(_call);
@@ -1277,7 +1277,7 @@ public class CronusServiceSoapStub extends org.apache.axis.client.Stub implement
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.cronus/", "GetEmployeeStatisticsGroupMetadata"));
 
         setRequestHeaders(_call);

@@ -1,5 +1,5 @@
 /**
- * EventkalenderServiceSoapStub.java
+ * EventkalenderServiceSoap12Stub.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,7 +7,7 @@
 
 package eventkalender.cali;
 
-public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub implements eventkalender.cali.EventkalenderServiceSoap {
+public class EventkalenderServiceSoap12Stub extends org.apache.axis.client.Stub implements eventkalender.cali.EventkalenderServiceSoap {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -175,16 +175,16 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
 
     }
 
-    public EventkalenderServiceSoapStub() throws org.apache.axis.AxisFault {
+    public EventkalenderServiceSoap12Stub() throws org.apache.axis.AxisFault {
          this(null);
     }
 
-    public EventkalenderServiceSoapStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public EventkalenderServiceSoap12Stub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
          super.cachedEndpoint = endpointURL;
     }
 
-    public EventkalenderServiceSoapStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public EventkalenderServiceSoap12Stub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         if (service == null) {
             super.service = new org.apache.axis.client.Service();
         } else {
@@ -338,7 +338,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetFile"));
 
         setRequestHeaders(_call);
@@ -372,7 +372,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetFiles"));
 
         setRequestHeaders(_call);
@@ -406,7 +406,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "AddFile"));
 
         setRequestHeaders(_call);
@@ -433,7 +433,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetNation"));
 
         setRequestHeaders(_call);
@@ -467,7 +467,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetNations"));
 
         setRequestHeaders(_call);
@@ -501,7 +501,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "AddNation"));
 
         setRequestHeaders(_call);
@@ -528,7 +528,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "AddEvent"));
 
         setRequestHeaders(_call);
@@ -555,7 +555,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetEvent"));
 
         setRequestHeaders(_call);
@@ -589,7 +589,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetEvents"));
 
         setRequestHeaders(_call);
@@ -623,7 +623,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "AddPerson"));
 
         setRequestHeaders(_call);
@@ -650,7 +650,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetPerson"));
 
         setRequestHeaders(_call);
@@ -684,7 +684,7 @@ public class EventkalenderServiceSoapStub extends org.apache.axis.client.Stub im
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP12_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://cali.eventkalender/", "GetPersons"));
 
         setRequestHeaders(_call);

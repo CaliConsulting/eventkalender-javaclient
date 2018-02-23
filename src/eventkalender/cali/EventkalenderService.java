@@ -8,9 +8,11 @@
 package eventkalender.cali;
 
 public interface EventkalenderService extends javax.xml.rpc.Service {
-    public java.lang.String getEventkalenderServiceSoapAddress();
+	public java.lang.String getEventkalenderServiceSoapAddress();
 
-    public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap() throws javax.xml.rpc.ServiceException;
+	public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap()
+			throws javax.xml.rpc.ServiceException;
 
-    public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+	public eventkalender.cali.EventkalenderServiceSoap getEventkalenderServiceSoap(java.net.URL portAddress)
+			throws javax.xml.rpc.ServiceException;
 }

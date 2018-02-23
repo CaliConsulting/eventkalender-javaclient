@@ -30,6 +30,8 @@ import eventkalender.cali.Person;
 
 import java.awt.TextArea;
 import javax.swing.JTextPane;
+import javax.swing.table.TableModel;
+import javax.swing.JTable;
 
 
 public class JavaApp {
@@ -49,8 +51,7 @@ public class JavaApp {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -266,13 +267,8 @@ public class JavaApp {
 		Data_Combobox.setBounds(150, 23, 215, 26);
 		Data_panel.add(Data_Combobox);
 		
-		final TextArea txtOutPutData = new TextArea();
-		txtOutPutData.setBounds(31, 187, 460, 157);
-		txtOutPutData.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		Data_panel.add(txtOutPutData);
-		
 		JButton Data_btn = new JButton("Hämta");
-		Data_btn.setBounds(198, 143, 110, 30);
+		Data_btn.setBounds(190, 60, 110, 30);
 		Data_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -338,8 +334,8 @@ public class JavaApp {
 		         else  if (CronusSelection.equals("Anställningssetup")) {
 			        	try {
 							SerializableKeyValuePairOfStringString[][] employeeSetupData = cronusProxy.getEmployeePortalSetupData();
-							String output = Metoder.getData(employeeSetupData);
-								txtOutPutData.setText("Data om Anställningssetup: " + output);
+							TableModel output = Metoder.getData(employeeSetupData);
+								System.out.print("Data om Anställningssetup: " + output);
 			        	} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -350,7 +346,7 @@ public class JavaApp {
 			        	try {
 			        		SerializableKeyValuePairOfStringString[][] illPersonsByYear = cronusProxy.getIllPersonsByYear(2004, 2005);
 			        		String output = Metoder.getData(illPersonsByYear);
-								txtOutPutData.setText("Sjukaste personen år 2004-2005: " + output);
+								txtOutPutData.set("Sjukaste personen år 2004-2005: " + output);
 						} catch (RemoteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -361,8 +357,9 @@ public class JavaApp {
 		         else if (CronusSelection.equals("Sjukaste personen")) {
 		        	try {
 		        		SerializableKeyValuePairOfStringString[] sjukastPerson = cronusProxy.getIllestPerson();
-		        		String output = Metoder.getData(sjukastPerson);
-							txtOutPutData.setText("Sjukaste personen: " + output);
+		        		TableModel output = Metoder.getData(sjukastedata);
+		        		
+							JTable.("Sjukaste personen: " + output);
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -378,25 +375,10 @@ public class JavaApp {
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		Data_panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Start year:");
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_2.setBounds(73, 75, 67, 18);
-		Data_panel.add(lblNewLabel_2);
-		
-		JLabel lblEndYear = new JLabel("End year:");
-		lblEndYear.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblEndYear.setBounds(301, 100, 67, 18);
-		Data_panel.add(lblEndYear);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(387, 75, 86, 20);
-		Data_panel.add(textField_3);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(387, 100, 86, 20);
-		Data_panel.add(textField_4);
+ 		
+		table = new JTable();
+		table.setBounds(31, 157, 468, 186);
+		Data_panel.add(table);
 		
 		JPanel Metadata_panel = new JPanel();
 		tabbedPane_1.addTab("Metadata", null, Metadata_panel, null);

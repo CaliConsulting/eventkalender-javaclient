@@ -2,9 +2,6 @@ package cali;
 
 import java.rmi.RemoteException;
 
-import javax.swing.table.TableModel;
-
-import cali.utility.Utility;
 import cronus.cali.CronusServiceSoapProxy;
 import cronus.cali.SerializableKeyValuePairOfStringString;
 import eventkalender.cali.EventkalenderServiceSoapProxy;
@@ -19,7 +16,7 @@ public class Main {
 
 		SerializableKeyValuePairOfStringString[][] s1 = cronusProxy.getEmployeeQualificationData();
 
-		//TableModel t = Utility.getData(s1);
+		// TableModel t = Utility.getData(s1);
 
 	}
 

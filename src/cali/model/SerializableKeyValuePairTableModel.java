@@ -1,6 +1,5 @@
 package cali.model;
 
-import javax.rmi.CORBA.Util;
 import javax.swing.table.AbstractTableModel;
 
 import cali.utility.Utility;
@@ -14,15 +13,15 @@ public class SerializableKeyValuePairTableModel extends AbstractTableModel {
 	private String[][] data;
 
 	public SerializableKeyValuePairTableModel(SerializableKeyValuePairOfStringString[] data) {
-		this(new SerializableKeyValuePairOfStringString[][] { data} );
+		this(new SerializableKeyValuePairOfStringString[][] { data });
 	}
-	
+
 	public SerializableKeyValuePairTableModel(SerializableKeyValuePairOfStringString[][] data) {
 		String[][] tempData = Utility.getData(data);
 		this.columnNames = tempData[0];
-		
+
 		this.data = new String[tempData.length - 1][tempData[0].length];
-		
+
 		for (int i = 1; i < tempData.length; i++) {
 			this.data[i - 1] = tempData[i];
 		}

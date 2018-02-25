@@ -14,9 +14,9 @@ public class EventTableModel extends AbstractTableModel {
 
 	private String[] columnNames;
 	private String[][] data;
-	
+
 	public EventTableModel(Event data) {
-		this (new Event[] { data });
+		this(new Event[] { data });
 	}
 
 	public EventTableModel(Event[] data) {
@@ -26,12 +26,12 @@ public class EventTableModel extends AbstractTableModel {
 
 		for (int i = 0; i < this.data.length; i++) {
 			Event e = data[i];
-			
+
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-			
+
 			LocalDateTime startTime = LocalDateTime.ofInstant(e.getStartTime().toInstant(), ZoneId.systemDefault());
 			LocalDateTime endTime = LocalDateTime.ofInstant(e.getEndTime().toInstant(), ZoneId.systemDefault());
-			
+
 			this.data[i] = new String[] { String.valueOf(e.getId()), e.getName(), e.getSummary(),
 					startTime.format(formatter), endTime.format(formatter), String.valueOf(e.getNationId()) };
 		}

@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import cali.controller.Controller;
@@ -27,12 +25,6 @@ import cali.model.SerializableKeyValuePairTableModel;
 import cali.model.StringTableModel;
 import cali.utility.ExceptionHandler;
 import cali.utility.Utility;
-import cronus.cali.CronusServiceSoapProxy;
-import cronus.cali.SerializableKeyValuePairOfStringString;
-import eventkalender.cali.Event;
-import eventkalender.cali.EventkalenderServiceSoapProxy;
-import eventkalender.cali.Nation;
-import eventkalender.cali.Person;
 
 public class App {
 
@@ -82,7 +74,7 @@ public class App {
 	 */
 	public App() {
 		controller = new Controller();
-		
+
 		initialize();
 	}
 
@@ -235,10 +227,10 @@ public class App {
 		});
 		pnlDataWS.add(btnDataWS);
 
-		// JLabel lblNewLabel_1 = new JLabel("Var god välj");
-		// lblNewLabel_1.setBounds(50, 25, 90, 20);
-		// lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		// Data_panel.add(lblNewLabel_1);
+		 JLabel lblDataWSChoose = new JLabel("Var god välj:");
+		 lblDataWSChoose.setBounds(184, 25, 90, 20);
+		 lblDataWSChoose.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		 pnlDataWS.add(lblDataWSChoose);
 
 		JPanel pnlMetadataWS = new JPanel();
 		tbpnWS.addTab("Metadata", null, pnlMetadataWS, null);
@@ -258,6 +250,11 @@ public class App {
 		JButton btnMetadataWS = new JButton("Hämta");
 		btnMetadataWS.setBounds(331, 60, 110, 30);
 		pnlMetadataWS.add(btnMetadataWS);
+		
+		JLabel lblMetadataWSChoose = new JLabel("Var god välj:");
+		lblMetadataWSChoose.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblMetadataWSChoose.setBounds(184, 25, 90, 20);
+		pnlMetadataWS.add(lblMetadataWSChoose);
 		btnMetadataWS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -269,8 +266,7 @@ public class App {
 					if (selection.equals("Anställda")) {
 						model = new SerializableKeyValuePairTableModel(controller.getEmployeeMetadata());
 					} else if (selection.equals("Anställningsstatistik")) {
-						model = new SerializableKeyValuePairTableModel(
-								controller.getEmployeeStatisticsGroupMetadata());
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeStatisticsGroupMetadata());
 					} else if (selection.equals("Anställningsrelationer")) {
 						model = new SerializableKeyValuePairTableModel(controller.getEmployeeRelativeMetadata());
 					} else if (selection.equals("Anställningskvalifikationer")) {
@@ -354,6 +350,5 @@ public class App {
 		txtOutput.setBounds(0, 447, 783, 33);
 		frame.getContentPane().add(txtOutput);
 		txtOutput.setColumns(10);
-
 	}
 }

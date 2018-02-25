@@ -14,7 +14,7 @@ public class PersonTableModel extends AbstractTableModel {
 	public PersonTableModel(Person data) {
 		this(new Person[] { data });
 	}
-	
+
 	public PersonTableModel(Person[] data) {
 		this.columnNames = new String[] { "Id", "First Name", "Last Name" };
 

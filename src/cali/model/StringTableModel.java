@@ -2,20 +2,18 @@ package cali.model;
 
 import javax.swing.table.AbstractTableModel;
 
-import eventkalender.cali.Nation;
-
 public class StringTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = -8616428338422326887L;
 
 	private String columnName;
 	private String[] data;
-	
+
 	public StringTableModel(String[] data) {
 		this.columnName = data[0];
-		
+
 		this.data = new String[data.length];
-		
+
 		for (int i = 1; i < data.length; i++) {
 			this.data[i - 1] = data[i];
 		}

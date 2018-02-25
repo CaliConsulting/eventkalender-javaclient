@@ -14,7 +14,7 @@ public class NationTableModel extends AbstractTableModel {
 	public NationTableModel(Nation data) {
 		this(new Nation[] { data });
 	}
-	
+
 	public NationTableModel(Nation[] data) {
 		this.columnNames = new String[] { "Id", "Name" };
 

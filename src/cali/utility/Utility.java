@@ -1,5 +1,9 @@
 package cali.utility;
 
+import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import javax.swing.table.TableModel;
 
 import cali.model.SerializableKeyValuePairTableModel;
@@ -16,11 +20,11 @@ public class Utility {
 		}
 	}
 
-	public static TableModel getData(SerializableKeyValuePairOfStringString[] data) {
+	public static String[][] getData(SerializableKeyValuePairOfStringString[] data) {
 		return getData(new SerializableKeyValuePairOfStringString[][] { data });
 	}
 
-	public static TableModel getData(SerializableKeyValuePairOfStringString[][] data) {
+	public static String[][] getData(SerializableKeyValuePairOfStringString[][] data) {
 		// Invalid data; return null immediately
 		if (data == null || data[0] == null || data[0][0] == null) {
 			return null;
@@ -30,10 +34,22 @@ public class Utility {
 		for (int i = 0; i < headers.length; i++) {
 			headers[i] = data[0][i].getKey();
 		}
-
+		
 		String[][] arr = dataToArray(data);
-		TableModel model = new SerializableKeyValuePairTableModel(headers, arr);
-		return model;
+
+		String[][] newArr = new String[arr.length + 1][arr[0].length];
+		
+		for (int i = 1; i < newArr.length; i++) {
+			newArr[i] = arr[i - 1];
+		}
+		newArr[0] = headers;
+		
+		
+//		List<String[]> list = new LinkedList<String[]>(Arrays.asList(arr));
+//		list.add(0, headers);
+//		arr = list.toArray(new String[list.size()]);
+		
+		return newArr;
 	}
 
 	public static String[][] dataToArray(SerializableKeyValuePairOfStringString[][] data) {

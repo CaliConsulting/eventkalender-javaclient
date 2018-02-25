@@ -16,12 +16,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import cali.controller.Controller;
 import cali.model.EventTableModel;
 import cali.model.NationTableModel;
 import cali.model.PersonTableModel;
+import cali.model.SerializableKeyValuePairTableModel;
+import cali.model.StringTableModel;
 import cali.utility.ExceptionHandler;
 import cali.utility.Utility;
 import cronus.cali.CronusServiceSoapProxy;
@@ -33,28 +36,28 @@ import eventkalender.cali.Person;
 
 public class App {
 
-	private EventkalenderServiceSoapProxy eventProxy;
-	private CronusServiceSoapProxy cronusProxy;
-
 	private Controller controller;
 
 	private JFrame frame;
 	private String NameC;
 	private String NameCA;
-	private String[] selectionList = { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
-	private String[] CBMetadata = { "Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index",
+	private String[] cmbEventkalenderContents = { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
+	private String[] cmbMetadataContents = { "Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index",
 			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
 			"Kolumner för anställningstabeller", "Anställningssetup" };
 	private String[] CBData = { "Anställda", "Sjukaste personen", "Sjukaste personen år 2004-2005",
 			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
 			"Anställningssetup" };
-	private JComboBox J = new JComboBox(selectionList);
+
+	private JComboBox J = new JComboBox(cmbEventkalenderContents);
+
 	private JButton B = new JButton("Hämta");
 	private JTextField txtEventkalenderId;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTable tblDataWS;
+	private JTable tblMetadataWS;
 	private JTable tblEventkalender;
 	private JTextField txtOutput;
 
@@ -78,12 +81,9 @@ public class App {
 	 * Create the application.
 	 */
 	public App() {
-		initialize();
-
-		eventProxy = new EventkalenderServiceSoapProxy();
-		cronusProxy = new CronusServiceSoapProxy();
-
 		controller = new Controller();
+		
+		initialize();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class App {
 		tbpnParent.addTab("Eventkalender ws", null, pnlEventkalender, null);
 		pnlEventkalender.setLayout(null);
 
-		final JComboBox cmbEventkalenderChoice = new JComboBox(selectionList);
+		final JComboBox cmbEventkalenderChoice = new JComboBox(cmbEventkalenderContents);
 		cmbEventkalenderChoice.setBounds(310, 29, 215, 26);
 		pnlEventkalender.add(cmbEventkalenderChoice);
 
@@ -112,10 +112,10 @@ public class App {
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
-				
+
 				String selection = (String) cmbEventkalenderChoice.getSelectedItem();
 				int id = -1;
-				if (Utility.isSubPart(selectionList, selection)) {
+				if (Utility.isSubPart(cmbEventkalenderContents, selection)) {
 					if (txtEventkalenderId.getText().equals("")) {
 						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
@@ -132,11 +132,11 @@ public class App {
 				try {
 					if (selection.equals("Nation")) {
 						// Nation n = eventProxy.getNation(id);
-						model = new NationTableModel(new Nation[] { controller.getNation(id) });
+						model = new NationTableModel(controller.getNation(id));
 					} else if (selection.equals("Event")) {
-						model = new EventTableModel(new Event[] { controller.getEvent(id) });
+						model = new EventTableModel(controller.getEvent(id));
 					} else if (selection.equals("Person")) {
-						model = new PersonTableModel(new Person[] { controller.getPerson(id) });
+						model = new PersonTableModel(controller.getPerson(id));
 					} else if (selection.equals("Nationer")) {
 						model = new NationTableModel(controller.getNations());
 					} else if (selection.equals("Events")) {
@@ -199,300 +199,156 @@ public class App {
 		scpnDataWS.setViewportView(tblDataWS);
 
 		JButton btnDataWS = new JButton("Hämta");
-		btnDataWS.setBounds(324, 60, 110, 30);
+		btnDataWS.setBounds(331, 60, 110, 30);
 		btnDataWS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtOutput.setText("");
+
 				String selection = (String) cmbDataWS.getSelectedItem();
 				TableModel model = null;
-				if (selection.equals("Anställda")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeData = cronusProxy.getEmployeeData();
-						model = Utility.getData(employeeData);
-						// txtOutPutData.setText("Data om anställda: " + output);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+
+				try {
+					if (selection.equals("Anställda")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeData());
+					} else if (selection.equals("Anställningsstatistik")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeStatisticsGroupData());
+					} else if (selection.equals("Anställningsrelationer")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeRelativeData());
+					} else if (selection.equals("Anställningskvalifikationer")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeQualificationData());
+					} else if (selection.equals("Anställningsfrånvaro")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeAbsenceData());
+					} else if (selection.equals("Anställningssetup")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeePortalSetupData());
+					} else if (selection.equals("Sjukaste personen år 2004-2005")) {
+						model = new SerializableKeyValuePairTableModel(controller.getIllPersonsByYear(2004, 2005));
+					} else if (selection.equals("Sjukaste personen")) {
+						model = new SerializableKeyValuePairTableModel(controller.getIllestPerson());
 					}
-				} else if (selection.equals("Anställningsstatistik")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeStatisticsData = cronusProxy
-								.getEmployeeStatisticsGroupData();
-						model = Utility.getData(employeeStatisticsData);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Anställningsrelationer")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeRelativeData = cronusProxy
-								.getEmployeeRelativeData();
-						model = Utility.getData(employeeRelativeData);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Anställningskvalifikationer")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeQualificationData = cronusProxy
-								.getEmployeeQualificationData();
-						model = Utility.getData(employeeQualificationData);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Anställningsfrånvaro")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeAbsenceData = cronusProxy
-								.getEmployeeAbsenceData();
-						model = Utility.getData(employeeAbsenceData);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Anställningssetup")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] employeeSetupData = cronusProxy
-								.getEmployeePortalSetupData();
-						model = Utility.getData(employeeSetupData);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Sjukaste personen år 2004-2005")) {
-					try {
-						SerializableKeyValuePairOfStringString[][] illPersonsByYear = cronusProxy
-								.getIllPersonsByYear(2004, 2005);
-						model = Utility.getData(illPersonsByYear);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Sjukaste personen")) {
-					try {
-						SerializableKeyValuePairOfStringString[] sjukastPerson = cronusProxy.getIllestPerson();
-						model = Utility.getData(sjukastPerson);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				} catch (Exception ex) {
+					txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
 				}
-				tblDataWS.setModel(model);
+				if (model != null) {
+					tblDataWS.setModel(model);
+				}
 			}
 		});
 		pnlDataWS.add(btnDataWS);
-		//
+
 		// JLabel lblNewLabel_1 = new JLabel("Var god välj");
 		// lblNewLabel_1.setBounds(50, 25, 90, 20);
 		// lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		// Data_panel.add(lblNewLabel_1);
-		//
-		//
-		// table = new JTable();
-		// table.setBounds(31, 157, 468, 186);
-		// Data_panel.add(table);
-		//
-		// JPanel Metadata_panel = new JPanel();
-		// tabbedPane_1.addTab("Metadata", null, Metadata_panel, null);
-		// Metadata_panel.setLayout(null);
-		//
-		// final JComboBox Metadata_Combobox = new JComboBox(CBMetadata);
-		// Metadata_Combobox.setBounds(155, 29, 215, 26);
-		// Metadata_panel.add(Metadata_Combobox);
-		//
-		// final TextArea txtOutPutMetadata = new TextArea();
-		// txtOutPutMetadata.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		// txtOutPutMetadata.setBounds(31, 178, 460, 166);
-		// Metadata_panel.add(txtOutPutMetadata);
-		//
-		// JButton Metadata_btn = new JButton("Hämta");
-		// Metadata_btn.setBounds(209, 76, 110, 30);
-		// Metadata_panel.add(Metadata_btn);
-		// Metadata_btn.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
-		//
-		//
-		// String MDCronusSelection = (String) Metadata_Combobox.getSelectedItem();
-		//
-		// if (MDCronusSelection.equals("Anställda")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeMetadata =
-		// cronusProxy.getEmployeeMetadata();
-		// String output = Metoder.getData(employeeMetadata);
-		// txtOutPutMetadata.setText("Data om anställda: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		//
-		// else if (MDCronusSelection.equals("Anställningsstatistik")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeStatisticsMetadata =
-		// cronusProxy.getEmployeeStatisticsGroupMetadata();
-		// String output = Metoder.getData(employeeStatisticsMetadata);
-		// txtOutPutMetadata.setText("Data om anställninsstatistik: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Anställningsrelationer")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeRelativeMetadata =
-		// cronusProxy.getEmployeeRelativeMetadata();
-		// String output = Metoder.getData(employeeRelativeMetadata);
-		// txtOutPutMetadata.setText("Data om anställningsrelationer: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Anställningskvalifikationer")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeQualificationMetadata =
-		// cronusProxy.getEmployeeQualificationMetadata();
-		// String output = Metoder.getData(employeeQualificationMetadata);
-		// txtOutPutMetadata.setText("Data om anställninskvalifikationer: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Anställningsfrånvaro")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeAbsenceMetadata =
-		// cronusProxy.getEmployeeAbsenceMetadata();
-		// String output = Metoder.getData(employeeAbsenceMetadata);
-		// txtOutPutMetadata.setText("Data om Anställningsfrånvaro: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Anställningssetup")) {
-		// try {
-		// SerializableKeyValuePairOfStringString[][] employeeSetupMetadata =
-		// cronusProxy.getEmployeePortalSetupMetadata();
-		// String output = Metoder.getData(employeeSetupMetadata);
-		// txtOutPutMetadata.setText("Data om Anställningssetup: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Tabeller")) {
-		// try {
-		// String[] tables = cronusProxy.getTables();
-		// String output = Metoder.getDataString(tables);
-		// txtOutPutMetadata.setText("Data om alla tabeller: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Tabellbegränsningar")) {
-		// try {
-		// String[] tableConstraints = cronusProxy.getTableConstraints();
-		// String output = Metoder.getDataString(tableConstraints);
-		// txtOutPutMetadata.setText("Data om alla tabellbegränsningar: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Kolumner för anställningstabeller")) {
-		// try {
-		// String[] columnsForEmployeeTable = cronusProxy.getColumnsForEmployeeTable();
-		// String output = Metoder.getDataString(columnsForEmployeeTable);
-		// txtOutPutMetadata.setText("Kolumner för anställningstabeller: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Index")) {
-		// try {
-		// String[] indexes = cronusProxy.getIndexes();
-		// String output = Metoder.getDataString(indexes);
-		// txtOutPutMetadata.setText("index: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		//
-		// else if (MDCronusSelection.equals("Nycklar")) {
-		// try {
-		// String[] keys = cronusProxy.getKeys();
-		// String output = Metoder.getDataString(keys);
-		// txtOutPutMetadata.setText("index: " + output);
-		// } catch (RemoteException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		// }
-		// });
 
-		JPanel panel = new JPanel();
-		tbpnWS.addTab("New tab", null, panel, null);
-		panel.setLayout(null);
+		JPanel pnlMetadataWS = new JPanel();
+		tbpnWS.addTab("Metadata", null, pnlMetadataWS, null);
+		pnlMetadataWS.setLayout(null);
+
+		final JComboBox cmbMetadataWS = new JComboBox(cmbMetadataContents);
+		cmbMetadataWS.setBounds(284, 23, 215, 26);
+		pnlMetadataWS.add(cmbMetadataWS);
+
+		JScrollPane scpnMetadataWS = new JScrollPane();
+		scpnMetadataWS.setBounds(0, 101, 773, 289);
+		pnlMetadataWS.add(scpnMetadataWS);
+
+		tblMetadataWS = new JTable();
+		scpnMetadataWS.setViewportView(tblMetadataWS);
+
+		JButton btnMetadataWS = new JButton("Hämta");
+		btnMetadataWS.setBounds(331, 60, 110, 30);
+		pnlMetadataWS.add(btnMetadataWS);
+		btnMetadataWS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtOutput.setText("");
+
+				String selection = (String) cmbMetadataWS.getSelectedItem();
+				TableModel model = null;
+
+				try {
+					if (selection.equals("Anställda")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeMetadata());
+					} else if (selection.equals("Anställningsstatistik")) {
+						model = new SerializableKeyValuePairTableModel(
+								controller.getEmployeeStatisticsGroupMetadata());
+					} else if (selection.equals("Anställningsrelationer")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeRelativeMetadata());
+					} else if (selection.equals("Anställningskvalifikationer")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeQualificationMetadata());
+					} else if (selection.equals("Anställningsfrånvaro")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeeAbsenceMetadata());
+					} else if (selection.equals("Anställningssetup")) {
+						model = new SerializableKeyValuePairTableModel(controller.getEmployeePortalSetupMetadata());
+					} else if (selection.equals("Tabeller")) {
+						model = new StringTableModel(controller.getTables());
+					} else if (selection.equals("Tabellbegränsningar")) {
+						model = new StringTableModel(controller.getTableConstraints());
+					} else if (selection.equals("Kolumner för anställningstabeller")) {
+						model = new StringTableModel(controller.getColumnsForEmployeeTable());
+					} else if (selection.equals("Index")) {
+						model = new StringTableModel(controller.getIndexes());
+					} else if (selection.equals("Nycklar")) {
+						model = new StringTableModel(controller.getKeys());
+					}
+				} catch (Exception ex) {
+					txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
+				}
+				if (model != null) {
+					tblMetadataWS.setModel(model);
+				}
+			}
+		});
+
+		JPanel pnlEmployeeWS = new JPanel();
+		tbpnWS.addTab("Employee", null, pnlEmployeeWS, null);
+		pnlEmployeeWS.setLayout(null);
 
 		JLabel lblId = new JLabel("ID nr:");
 		lblId.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblId.setBounds(33, 25, 46, 14);
-		panel.add(lblId);
+		pnlEmployeeWS.add(lblId);
 
 		JLabel lblFrnamn = new JLabel("Förnamn:");
 		lblFrnamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblFrnamn.setBounds(33, 50, 72, 14);
-		panel.add(lblFrnamn);
+		pnlEmployeeWS.add(lblFrnamn);
 
 		JLabel lblEfternamn = new JLabel("Efternamn:");
 		lblEfternamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblEfternamn.setBounds(33, 75, 75, 14);
-		panel.add(lblEfternamn);
+		pnlEmployeeWS.add(lblEfternamn);
 
 		TextArea txtOutPutoklar = new TextArea();
 		txtOutPutoklar.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		txtOutPutoklar.setBounds(33, 192, 460, 152);
-		panel.add(txtOutPutoklar);
+		pnlEmployeeWS.add(txtOutPutoklar);
 
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(115, 23, 97, 20);
-		panel.add(textField);
+		pnlEmployeeWS.add(textField);
 
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(115, 48, 97, 20);
-		panel.add(textField_1);
+		pnlEmployeeWS.add(textField_1);
 
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
 		textField_2.setBounds(115, 73, 97, 20);
-		panel.add(textField_2);
+		pnlEmployeeWS.add(textField_2);
 
 		JButton btnNewButton_2 = new JButton("New button");
 		btnNewButton_2.setBounds(115, 105, 97, 28);
-		panel.add(btnNewButton_2);
+		pnlEmployeeWS.add(btnNewButton_2);
 
 		JButton btnNewButton_3 = new JButton("Uppdatera");
 		btnNewButton_3.setBounds(33, 158, 97, 28);
-		panel.add(btnNewButton_3);
+		pnlEmployeeWS.add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("New button");
 		btnNewButton_4.setBounds(396, 158, 97, 28);
-		panel.add(btnNewButton_4);
+		pnlEmployeeWS.add(btnNewButton_4);
 
 		txtOutput = new JTextField();
 		txtOutput.setBounds(0, 447, 783, 33);

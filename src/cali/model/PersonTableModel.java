@@ -11,8 +11,12 @@ public class PersonTableModel extends AbstractTableModel {
 	private String[] columnNames;
 	private String[][] data;
 
+	public PersonTableModel(Person data) {
+		this(new Person[] { data });
+	}
+	
 	public PersonTableModel(Person[] data) {
-		this.columnNames = new String[] { "Id", "FirstName", "LastName" };
+		this.columnNames = new String[] { "Id", "First Name", "Last Name" };
 
 		this.data = new String[data.length][this.columnNames.length];
 

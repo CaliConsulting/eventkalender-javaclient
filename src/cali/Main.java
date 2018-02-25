@@ -19,7 +19,7 @@ public class Main {
 
 		SerializableKeyValuePairOfStringString[][] s1 = cronusProxy.getEmployeeQualificationData();
 
-		TableModel t = Utility.getData(s1);
+		//TableModel t = Utility.getData(s1);
 
 	}
 

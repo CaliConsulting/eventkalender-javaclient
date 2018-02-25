@@ -3,6 +3,7 @@ package cali.utility;
 import java.rmi.RemoteException;
 
 import javax.swing.JTextPane;
+import javax.xml.soap.SOAPException;
 
 public class ExceptionHandler {
 
@@ -27,6 +28,8 @@ public class ExceptionHandler {
 			message = "Fältet accepterar inte denna indata, var god kontrollera formattering på tal och text";
 		} else if (e instanceof NullPointerException) {
 			message = "Var god ange värden för alla fält";
+		} else if (e instanceof SOAPException) {
+			message = "Ett SOAP-fel inträffade vid kommunikation med webbtjänsten";
 		} else if (e instanceof RemoteException) {
 			message = "Fel uppstod vid kommunikation med webbtjänsten";
 		} else {

@@ -1,5 +1,9 @@
 package cali.model;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.table.AbstractTableModel;
 
 import eventkalender.cali.Event;
@@ -18,9 +22,14 @@ public class EventTableModel extends AbstractTableModel {
 
 		for (int i = 0; i < this.data.length; i++) {
 			Event e = data[i];
-			this.data[i] = new String[] { String.valueOf(e.getId()), e.getName(),
-					String.valueOf(e.getStartTime().getTime()), String.valueOf(e.getEndTime().getTime()),
-					String.valueOf(e.getNationId()) };
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			
+			LocalDateTime startTime = LocalDateTime.ofInstant(e.getStartTime().toInstant(), ZoneId.systemDefault());
+			LocalDateTime endTime = LocalDateTime.ofInstant(e.getEndTime().toInstant(), ZoneId.systemDefault());
+			
+			this.data[i] = new String[] { String.valueOf(e.getId()), e.getName(), e.getSummary(),
+					startTime.format(formatter), endTime.format(formatter), String.valueOf(e.getNationId()) };
 		}
 	}
 

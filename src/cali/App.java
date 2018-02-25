@@ -91,12 +91,12 @@ public class App {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 550, 450);
+		frame.setBounds(100, 100, 799, 519);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JTabbedPane tbpnParent = new JTabbedPane(JTabbedPane.TOP);
-		tbpnParent.setBounds(0, 0, 534, 377);
+		tbpnParent.setBounds(0, 0, 783, 446);
 		frame.getContentPane().add(tbpnParent);
 
 		JPanel pnlEventkalender = new JPanel();
@@ -104,11 +104,11 @@ public class App {
 		pnlEventkalender.setLayout(null);
 
 		final JComboBox cmbEventkalenderChoice = new JComboBox(selectionList);
-		cmbEventkalenderChoice.setBounds(153, 29, 215, 26);
+		cmbEventkalenderChoice.setBounds(310, 29, 215, 26);
 		pnlEventkalender.add(cmbEventkalenderChoice);
 
 		JButton btnEventkalenderGetData = new JButton("Hämta");
-		btnEventkalenderGetData.setBounds(206, 110, 110, 30);
+		btnEventkalenderGetData.setBounds(334, 110, 110, 30);
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -154,22 +154,22 @@ public class App {
 		});
 		pnlEventkalender.add(btnEventkalenderGetData);
 		JLabel lblEventkalenderChoice = new JLabel("Var god välj:");
-		lblEventkalenderChoice.setBounds(52, 34, 99, 16);
+		lblEventkalenderChoice.setBounds(209, 34, 99, 16);
 		lblEventkalenderChoice.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		pnlEventkalender.add(lblEventkalenderChoice);
 
 		txtEventkalenderId = new JTextField();
-		txtEventkalenderId.setBounds(153, 79, 86, 20);
+		txtEventkalenderId.setBounds(310, 79, 86, 20);
 		pnlEventkalender.add(txtEventkalenderId);
 		txtEventkalenderId.setColumns(10);
 
 		JLabel lblEventkalenderId = new JLabel("ID nr:");
 		lblEventkalenderId.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblEventkalenderId.setBounds(52, 81, 57, 14);
+		lblEventkalenderId.setBounds(209, 81, 57, 14);
 		pnlEventkalender.add(lblEventkalenderId);
 
 		JScrollPane scpnEventkalender = new JScrollPane();
-		scpnEventkalender.setBounds(0, 151, 528, 200);
+		scpnEventkalender.setBounds(0, 151, 778, 267);
 		pnlEventkalender.add(scpnEventkalender);
 
 		tblEventkalender = new JTable();
@@ -180,7 +180,7 @@ public class App {
 		pnlCronus.setLayout(null);
 
 		JTabbedPane tbpnWS = new JTabbedPane(JTabbedPane.TOP);
-		tbpnWS.setBounds(0, 0, 529, 348);
+		tbpnWS.setBounds(0, 0, 778, 418);
 		pnlCronus.add(tbpnWS);
 
 		JPanel pnlDataWS = new JPanel();
@@ -188,18 +188,18 @@ public class App {
 		pnlDataWS.setLayout(null);
 
 		final JComboBox cmbDataWS = new JComboBox(CBData);
-		cmbDataWS.setBounds(150, 23, 215, 26);
+		cmbDataWS.setBounds(284, 23, 215, 26);
 		pnlDataWS.add(cmbDataWS);
 
 		JScrollPane scpnDataWS = new JScrollPane();
-		scpnDataWS.setBounds(0, 101, 524, 219);
+		scpnDataWS.setBounds(0, 101, 773, 289);
 		pnlDataWS.add(scpnDataWS);
 
 		tblDataWS = new JTable();
 		scpnDataWS.setViewportView(tblDataWS);
 
 		JButton btnDataWS = new JButton("Hämta");
-		btnDataWS.setBounds(190, 60, 110, 30);
+		btnDataWS.setBounds(324, 60, 110, 30);
 		btnDataWS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String selection = (String) cmbDataWS.getSelectedItem();
@@ -495,7 +495,7 @@ public class App {
 		panel.add(btnNewButton_4);
 
 		txtOutput = new JTextField();
-		txtOutput.setBounds(0, 374, 534, 37);
+		txtOutput.setBounds(0, 447, 783, 33);
 		frame.getContentPane().add(txtOutput);
 		txtOutput.setColumns(10);
 

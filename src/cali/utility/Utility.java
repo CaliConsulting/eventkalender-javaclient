@@ -1,14 +1,12 @@
 package cali.utility;
 
-import java.util.List;
-
 import javax.swing.table.TableModel;
 
 import cali.model.SerializableKeyValuePairTableModel;
 import cronus.cali.SerializableKeyValuePairOfStringString;
 
 public class Utility {
-	
+
 	public static boolean isStringInt(String s) {
 		try {
 			Integer.parseInt(s);
@@ -17,7 +15,7 @@ public class Utility {
 			return false;
 		}
 	}
-	
+
 	public static TableModel getData(SerializableKeyValuePairOfStringString[] data) {
 		return getData(new SerializableKeyValuePairOfStringString[][] { data });
 	}
@@ -37,7 +35,7 @@ public class Utility {
 		TableModel model = new SerializableKeyValuePairTableModel(headers, arr);
 		return model;
 	}
-	
+
 	public static String[][] dataToArray(SerializableKeyValuePairOfStringString[][] data) {
 		// Invalid data; return null immediately
 		if (data == null || data[0] == null || data[0][0] == null) {
@@ -53,6 +51,16 @@ public class Utility {
 			}
 		}
 		return arr;
+	}
+
+	public static boolean isSubPart(String[] contents, String s) {
+		for (int i = 0; i < contents.length; i++) {
+			String content = contents[i];
+			if (!content.equals(s) && content.contains(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// public static TableModel getData(SerializableKeyValuePairOfStringString[]

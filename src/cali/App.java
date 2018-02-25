@@ -1,26 +1,29 @@
 package cali;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JTabbedPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.Font;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
-import javax.swing.JOptionPane;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableModel;
 
+import cali.controller.Controller;
+import cali.model.EventTableModel;
+import cali.model.NationTableModel;
+import cali.model.PersonTableModel;
+import cali.utility.ExceptionHandler;
+import cali.utility.Utility;
 import cronus.cali.CronusServiceSoapProxy;
 import cronus.cali.SerializableKeyValuePairOfStringString;
 import eventkalender.cali.Event;
@@ -28,38 +31,32 @@ import eventkalender.cali.EventkalenderServiceSoapProxy;
 import eventkalender.cali.Nation;
 import eventkalender.cali.Person;
 
-import java.awt.TextArea;
-import javax.swing.JTextPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import cali.utility.Utility;
-
-import javax.swing.JTable;
-import java.awt.ScrollPane;
-
 public class App {
 
 	private EventkalenderServiceSoapProxy eventProxy;
 	private CronusServiceSoapProxy cronusProxy;
 
+	private Controller controller;
+
 	private JFrame frame;
 	private String NameC;
 	private String NameCA;
-	private String[] SelectionList = { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
+	private String[] selectionList = { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
 	private String[] CBMetadata = { "Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index",
 			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
 			"Kolumner för anställningstabeller", "Anställningssetup" };
 	private String[] CBData = { "Anställda", "Sjukaste personen", "Sjukaste personen år 2004-2005",
 			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
 			"Anställningssetup" };
-	private JComboBox J = new JComboBox(SelectionList);
+	private JComboBox J = new JComboBox(selectionList);
 	private JButton B = new JButton("Hämta");
 	private JTextField txtEventkalenderId;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTable tblDataWS;
+	private JTable tblEventkalender;
+	private JTextField txtOutput;
 
 	/**
 	 * Launch the application.
@@ -85,6 +82,8 @@ public class App {
 
 		eventProxy = new EventkalenderServiceSoapProxy();
 		cronusProxy = new CronusServiceSoapProxy();
+
+		controller = new Controller();
 	}
 
 	/**
@@ -97,30 +96,26 @@ public class App {
 		frame.getContentPane().setLayout(null);
 
 		JTabbedPane tbpnParent = new JTabbedPane(JTabbedPane.TOP);
-		tbpnParent.setBounds(0, 0, 550, 428);
+		tbpnParent.setBounds(0, 0, 534, 377);
 		frame.getContentPane().add(tbpnParent);
 
 		JPanel pnlEventkalender = new JPanel();
 		tbpnParent.addTab("Eventkalender ws", null, pnlEventkalender, null);
 		pnlEventkalender.setLayout(null);
 
-		final JComboBox cmbEventkalenderChoice = new JComboBox(SelectionList);
+		final JComboBox cmbEventkalenderChoice = new JComboBox(selectionList);
 		cmbEventkalenderChoice.setBounds(153, 29, 215, 26);
 		pnlEventkalender.add(cmbEventkalenderChoice);
 
-		final JTextArea txtOutput = new JTextArea();
-		txtOutput.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		txtOutput.setBounds(29, 222, 461, 128);
-		pnlEventkalender.add(txtOutput);
-
 		JButton btnEventkalenderGetData = new JButton("Hämta");
-		btnEventkalenderGetData.setBounds(206, 127, 110, 30);
+		btnEventkalenderGetData.setBounds(206, 110, 110, 30);
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				txtOutput.setText("");
+				
 				String selection = (String) cmbEventkalenderChoice.getSelectedItem();
-
-				if (selection.equals("Nation")) {
+				int id = -1;
+				if (Utility.isSubPart(selectionList, selection)) {
 					if (txtEventkalenderId.getText().equals("")) {
 						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
@@ -128,111 +123,32 @@ public class App {
 					boolean isInt = Utility.isStringInt(txtEventkalenderId.getText());
 					if (!isInt) {
 						txtOutput.setText("Ange giltigt heltal");
-					}
-					int id = Integer.parseInt(txtEventkalenderId.getText());
-					try {
-						Nation n = eventProxy.getNation(id);
-						if (n != null) {
-							txtOutput.setText("Du har valt: " + n.getName());
-						} else {
-							txtOutput.setText("Nation med ID " + id + " finns inte");
-						}
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Event")) {
-					if (txtEventkalenderId.getText().equals("")) {
-						txtOutput.setText("Var god fyll i ID-fältet!");
 						return;
 					}
-					boolean isInt = Utility.isStringInt(txtEventkalenderId.getText());
-					if (!isInt) {
-						txtOutput.setText("Ange giltigt heltal");
+					id = Integer.parseInt(txtEventkalenderId.getText());
+				}
+
+				TableModel model = null;
+				try {
+					if (selection.equals("Nation")) {
+						// Nation n = eventProxy.getNation(id);
+						model = new NationTableModel(new Nation[] { controller.getNation(id) });
+					} else if (selection.equals("Event")) {
+						model = new EventTableModel(new Event[] { controller.getEvent(id) });
+					} else if (selection.equals("Person")) {
+						model = new PersonTableModel(new Person[] { controller.getPerson(id) });
+					} else if (selection.equals("Nationer")) {
+						model = new NationTableModel(controller.getNations());
+					} else if (selection.equals("Events")) {
+						model = new EventTableModel(controller.getEvents());
+					} else if (selection.equals("Personer")) {
+						model = new PersonTableModel(controller.getPersons());
 					}
-					int id = Integer.parseInt(txtEventkalenderId.getText());
-
-					try {
-						Event event = eventProxy.getEvent(id);
-						if (event != null) {
-							txtOutput.setText("Du har valt: " + event.getName());
-						} else {
-							txtOutput.setText("Nation med ID " + id + " finns inte");
-						}
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Person")) {
-					if (txtEventkalenderId.getText().equals("")) {
-						txtOutput.setText("Var god fyll i ID-fältet!");
-						return;
-					}
-					boolean isInt = Utility.isStringInt(txtEventkalenderId.getText());
-					if (!isInt) {
-						txtOutput.setText("Ange giltigt heltal");
-					}
-					int id = Integer.parseInt(txtEventkalenderId.getText());
-
-					try {
-						Person p = eventProxy.getPerson(id);
-						if (p != null) {
-							txtOutput.setText("Du har valt: " + p.getFirstName() + " " + p.getLastName());
-						} else {
-							txtOutput.setText("Nation med ID " + id + " finns inte");
-						}
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Nationer")) {
-					try {
-						Nation[] nationer = eventProxy.getNations();
-
-						String output = "Alla nationer: ";
-
-						for (int i = 0; i < nationer.length; i++) {
-							output += System.lineSeparator();
-							output += nationer[i].getName();
-						}
-						txtOutput.setText(output);
-
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Events")) {
-					try {
-						Event[] events = eventProxy.getEvents();
-
-						String output = "Alla events: ";
-
-						for (int i = 0; i < events.length; i++) {
-							output += System.lineSeparator();
-							output += events[i].getName();
-						}
-						txtOutput.setText(output);
-
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else if (selection.equals("Personer")) {
-					try {
-						Person[] personer = eventProxy.getPersons();
-
-						String output = "Alla personer: ";
-
-						for (int i = 0; i < personer.length; i++) {
-							output += System.lineSeparator();
-							output += personer[i].getFirstName() + " " + personer[i].getLastName();
-						}
-						txtOutput.setText(output);
-
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				} catch (Exception ex) {
+					txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
+				}
+				if (model != null) {
+					tblEventkalender.setModel(model);
 				}
 			}
 		});
@@ -252,12 +168,19 @@ public class App {
 		lblEventkalenderId.setBounds(52, 81, 57, 14);
 		pnlEventkalender.add(lblEventkalenderId);
 
+		JScrollPane scpnEventkalender = new JScrollPane();
+		scpnEventkalender.setBounds(0, 151, 528, 200);
+		pnlEventkalender.add(scpnEventkalender);
+
+		tblEventkalender = new JTable();
+		scpnEventkalender.setViewportView(tblEventkalender);
+
 		JPanel pnlCronus = new JPanel();
 		tbpnParent.addTab("Databas ws", null, pnlCronus, null);
 		pnlCronus.setLayout(null);
 
 		JTabbedPane tbpnWS = new JTabbedPane(JTabbedPane.TOP);
-		tbpnWS.setBounds(0, 0, 529, 382);
+		tbpnWS.setBounds(0, 0, 529, 348);
 		pnlCronus.add(tbpnWS);
 
 		JPanel pnlDataWS = new JPanel();
@@ -570,6 +493,11 @@ public class App {
 		JButton btnNewButton_4 = new JButton("New button");
 		btnNewButton_4.setBounds(396, 158, 97, 28);
 		panel.add(btnNewButton_4);
+
+		txtOutput = new JTextField();
+		txtOutput.setBounds(0, 374, 534, 37);
+		frame.getContentPane().add(txtOutput);
+		txtOutput.setColumns(10);
 
 	}
 }

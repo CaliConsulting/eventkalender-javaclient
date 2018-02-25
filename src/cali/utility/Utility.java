@@ -71,33 +71,4 @@ public class Utility {
 		return false;
 	}
 
-	// public static TableModel getData(SerializableKeyValuePairOfStringString[]
-	// sjukastedata) {
-	// TableModel d = new DefaultTableModel(0, 1);
-	//
-	// for (int k = 0; k < sjukastedata.length; k++) {
-	//
-	// d.setValueAt(sjukastedata[0], 0, 0);
-	// SerializableKeyValuePairOfStringString[] s = sjukastedata;
-	// for (int k = 1; k < s.length; k++) {
-	// SerializableKeyValuePairOfStringString s1 = s[k];
-	// d.setValueAt(s1.getValue(), k, 0);
-	// }
-	// return d;
-	// }
-
-	// }
-	//
-	//
-	// public static String getDataString(String[] DataString) {
-	// String output = "";
-	// for (int i = 1; i < DataString.length; i++) {
-	// String p = DataString[i];
-	// output += System.lineSeparator();
-	// output += p;
-	//
-	// }
-	// return output;
-	// }
-
 }

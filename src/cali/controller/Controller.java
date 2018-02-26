@@ -119,5 +119,14 @@ public class Controller {
 	public String[] getKeys() throws RemoteException {
 		return cronusProxy.getTables();
 	}
-
+	
+	public void addEmployee(String no, String firstName, String lastName) throws RemoteException {
+		cronusProxy.addEmployee( no, firstName, lastName);
+	}
+	public void updateEmployee(String no, String firstName, String lastName) throws RemoteException {
+		cronusProxy.updateEmployee(no, firstName, lastName);
+	}
+	public void deleteEmployee(String no) throws RemoteException {
+		cronusProxy.deleteEmployee(no);
+	}
 }

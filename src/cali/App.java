@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import cali.controller.Controller;
+import cali.model.EmployeeTableModel;
 import cali.model.EventTableModel;
 import cali.model.NationTableModel;
 import cali.model.PersonTableModel;
@@ -25,6 +27,7 @@ import cali.model.SerializableKeyValuePairTableModel;
 import cali.model.StringTableModel;
 import cali.utility.ExceptionHandler;
 import cali.utility.Utility;
+import cronus.cali.Employee;
 
 public class App {
 
@@ -45,13 +48,14 @@ public class App {
 
 	private JButton B = new JButton("Hämta");
 	private JTextField txtEventkalenderId;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtEmployeeId;
+	private JTextField txtEmployeeFörnamn;
+	private JTextField txtEmployeeEfternamn;
 	private JTable tblDataWS;
 	private JTable tblMetadataWS;
 	private JTable tblEventkalender;
 	private JTextField txtOutput;
+	private JTable tblEmployeeWS;
 
 	/**
 	 * Launch the application.
@@ -298,53 +302,120 @@ public class App {
 		JPanel pnlEmployeeWS = new JPanel();
 		tbpnWS.addTab("Employee", null, pnlEmployeeWS, null);
 		pnlEmployeeWS.setLayout(null);
+		
+		JScrollPane scpnEmployeeWS = new JScrollPane();
+		scpnEmployeeWS.setBounds(329, 50, 444, 340);
+		pnlEmployeeWS.add(scpnEmployeeWS);
+		
+		tblEmployeeWS = new JTable();
+		scpnEmployeeWS.setViewportView(tblEmployeeWS);
 
+		
 		JLabel lblId = new JLabel("ID nr:");
+		lblId.setBounds(33, 122, 46, 14);
 		lblId.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblId.setBounds(33, 25, 46, 14);
 		pnlEmployeeWS.add(lblId);
 
 		JLabel lblFrnamn = new JLabel("Förnamn:");
+		lblFrnamn.setBounds(33, 60, 72, 14);
 		lblFrnamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblFrnamn.setBounds(33, 50, 72, 14);
 		pnlEmployeeWS.add(lblFrnamn);
 
 		JLabel lblEfternamn = new JLabel("Efternamn:");
+		lblEfternamn.setBounds(33, 91, 75, 14);
 		lblEfternamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblEfternamn.setBounds(33, 75, 75, 14);
 		pnlEmployeeWS.add(lblEfternamn);
 
-		TextArea txtOutPutoklar = new TextArea();
-		txtOutPutoklar.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		txtOutPutoklar.setBounds(33, 192, 460, 152);
-		pnlEmployeeWS.add(txtOutPutoklar);
+		txtEmployeeId = new JTextField();
+		txtEmployeeId.setBounds(115, 120, 97, 20);
+		txtEmployeeId.setColumns(10);
+		pnlEmployeeWS.add(txtEmployeeId);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(115, 23, 97, 20);
-		pnlEmployeeWS.add(textField);
+		txtEmployeeFörnamn = new JTextField();
+		txtEmployeeFörnamn.setBounds(115, 58, 97, 20);
+		txtEmployeeFörnamn.setColumns(10);
+		pnlEmployeeWS.add(txtEmployeeFörnamn);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(115, 48, 97, 20);
-		pnlEmployeeWS.add(textField_1);
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(115, 73, 97, 20);
-		pnlEmployeeWS.add(textField_2);
-
-		JButton btnNewButton_2 = new JButton("New button");
-		btnNewButton_2.setBounds(115, 105, 97, 28);
-		pnlEmployeeWS.add(btnNewButton_2);
-
-		JButton btnNewButton_3 = new JButton("Uppdatera");
-		btnNewButton_3.setBounds(33, 158, 97, 28);
-		pnlEmployeeWS.add(btnNewButton_3);
-
-		JButton btnNewButton_4 = new JButton("New button");
-		btnNewButton_4.setBounds(396, 158, 97, 28);
-		pnlEmployeeWS.add(btnNewButton_4);
+		txtEmployeeEfternamn = new JTextField();
+		txtEmployeeEfternamn.setBounds(115, 89, 97, 20);
+		txtEmployeeEfternamn.setColumns(10);
+		pnlEmployeeWS.add(txtEmployeeEfternamn);
+		
+		Object [] column = new Object [4];
+		JButton btnAddEmployee = new JButton("Lägg till");
+		btnAddEmployee.setBounds(115, 151, 97, 28);
+		pnlEmployeeWS.add(btnAddEmployee);
+		btnAddEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TableModel model = null;
+				txtOutput.setText("");
+				String no = txtEmployeeId.getText();
+				String firstName = txtEmployeeFörnamn.getText();
+				String lastName = txtEmployeeEfternamn.getText();
+				try {
+					controller.addEmployee(no, firstName, lastName);
+					Employee emp = new Employee();
+					emp.setNo(no);
+					emp.setFirstName(firstName);
+					emp.setLastName(lastName);
+					model = new EmployeeTableModel(emp);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if (model != null) {
+					tblEmployeeWS.setModel(model);
+				}
+			}	
+		});
+		
+		JButton btnDeleteEmployee = new JButton("Radera");
+		btnDeleteEmployee.setBounds(522, 11, 97, 28);
+		pnlEmployeeWS.add(btnDeleteEmployee);
+		btnDeleteEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtOutput.setText("");
+				int rowIndex = tblEmployeeWS.getSelectedRow();
+				String no = (String) tblEmployeeWS.getValueAt(rowIndex, 0);
+				try {
+					if (rowIndex >= 0) {
+						controller.deleteEmployee(no);
+					} else {
+						System.out.println("Det finns ingen rad att radera");
+					}
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+					
+				}	
+			});
+		
+		JButton btnUpdateEmployee = new JButton("Uppdatera");
+		btnUpdateEmployee.setBounds(115, 195, 97, 28);
+		pnlEmployeeWS.add(btnUpdateEmployee);
+		btnUpdateEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+				int i = tblEmployeeWS.getSelectedRow();
+				TableModel model = null;
+				txtOutput.setText("");
+				String no = txtEmployeeId.getText();
+				String firstName = txtEmployeeFörnamn.getText();
+				String lastName = txtEmployeeEfternamn.getText();
+				controller.updateEmployee(no, firstName, lastName);
+			
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+				
+		});
+		JLabel lblNewLabel = new JLabel("Användare");
+		lblNewLabel.setBounds(68, 21, 97, 20);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		pnlEmployeeWS.add(lblNewLabel);
 
 		txtOutput = new JTextField();
 		txtOutput.setBounds(0, 447, 783, 33);

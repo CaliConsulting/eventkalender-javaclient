@@ -59,6 +59,7 @@ public class App {
 	private JTable tblEventkalender;
 	private JTextField txtOutput;
 	private JTable tblEmployeeWS;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -101,89 +102,128 @@ public class App {
 		JPanel pnlEventkalender = new JPanel();
 		tbpnParent.addTab("Eventkalender ws", null, pnlEventkalender, null);
 		pnlEventkalender.setLayout(null);
+		
+		JTabbedPane tbpnEventkalender = new JTabbedPane(JTabbedPane.TOP);
+		tbpnEventkalender.setBounds(0, 0, 778, 407);
+		pnlEventkalender.add(tbpnEventkalender);
+		
+		JPanel pnlGetFile = new JPanel();
+		tbpnEventkalender.addTab("Hämta fil", null, pnlGetFile, null);
+				pnlGetFile.setLayout(null);
+		
+				final JComboBox cmbEventkalenderChoice = new JComboBox(cmbEventkalenderContents);
+				cmbEventkalenderChoice.setBounds(209, 6, 68, 20);
+				pnlGetFile.add(cmbEventkalenderChoice);
+				
+						JButton btnEventkalenderGetData = new JButton("Hämta");
+						btnEventkalenderGetData.setBounds(282, 5, 63, 23);
+						pnlGetFile.add(btnEventkalenderGetData);
+						JLabel lblEventkalenderChoice = new JLabel("Var god välj:");
+						lblEventkalenderChoice.setBounds(350, 8, 79, 17);
+						pnlGetFile.add(lblEventkalenderChoice);
+						lblEventkalenderChoice.setFont(new Font("Times New Roman", Font.BOLD, 14));
+						
+								txtEventkalenderId = new JTextField();
+								txtEventkalenderId.setBounds(434, 6, 86, 20);
+								pnlGetFile.add(txtEventkalenderId);
+								txtEventkalenderId.setColumns(10);
+								
+										JLabel lblEventkalenderId = new JLabel("ID nr:");
+										lblEventkalenderId.setBounds(525, 8, 39, 17);
+										pnlGetFile.add(lblEventkalenderId);
+										lblEventkalenderId.setFont(new Font("Times New Roman", Font.BOLD, 14));
+										
+												JScrollPane scpnEventkalender = new JScrollPane();
+												scpnEventkalender.setBounds(160, 33, 452, 402);
+												pnlGetFile.add(scpnEventkalender);
+												
+														tblEventkalender = new JTable();
+														scpnEventkalender.setViewportView(tblEventkalender);
+														
+														JPanel pnlGetCollections = new JPanel();
+														tbpnEventkalender.addTab("Hämta listor", null, pnlGetCollections, null);
+														pnlGetCollections.setLayout(null);
+														
+														JComboBox comboBox = new JComboBox(new Object[]{});
+														comboBox.setBounds(366, 11, 105, 20);
+														pnlGetCollections.add(comboBox);
+														
+														JButton button = new JButton("Hämta");
+														button.setBounds(326, 90, 110, 30);
+														pnlGetCollections.add(button);
+														
+														textField = new JTextField();
+														textField.setColumns(10);
+														textField.setBounds(355, 52, 116, 20);
+														pnlGetCollections.add(textField);
+														
+														JLabel label = new JLabel("ID nr:");
+														label.setFont(new Font("Times New Roman", Font.BOLD, 14));
+														label.setBounds(306, 53, 39, 17);
+														pnlGetCollections.add(label);
+														
+														JLabel label_1 = new JLabel("Var god välj:");
+														label_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+														label_1.setBounds(271, 12, 79, 17);
+														pnlGetCollections.add(label_1);
+														
+														JScrollPane scrollPane = new JScrollPane();
+														scrollPane.setBounds(0, 141, 773, 255);
+														pnlGetCollections.add(scrollPane);
+						btnEventkalenderGetData.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								txtOutput.setText("");
 
-		final JComboBox cmbEventkalenderChoice = new JComboBox(cmbEventkalenderContents);
-		cmbEventkalenderChoice.setBounds(310, 29, 215, 26);
-		pnlEventkalender.add(cmbEventkalenderChoice);
+								String selection = (String) cmbEventkalenderChoice.getSelectedItem();
+								int id = -1;
+								if (Utility.isSubPart(cmbEventkalenderContents, selection)) {
+									if (txtEventkalenderId.getText().equals("")) {
+										txtOutput.setText("Var god fyll i ID-fältet!");
+										return;
+									}
+									boolean isInt = Utility.isStringInt(txtEventkalenderId.getText());
+									if (!isInt) {
+										txtOutput.setText("Ange giltigt heltal");
+										return;
+									}
+									id = Integer.parseInt(txtEventkalenderId.getText());
+								}
 
-		JButton btnEventkalenderGetData = new JButton("Hämta");
-		btnEventkalenderGetData.setBounds(334, 110, 110, 30);
-		btnEventkalenderGetData.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtOutput.setText("");
-
-				String selection = (String) cmbEventkalenderChoice.getSelectedItem();
-				int id = -1;
-				if (Utility.isSubPart(cmbEventkalenderContents, selection)) {
-					if (txtEventkalenderId.getText().equals("")) {
-						txtOutput.setText("Var god fyll i ID-fältet!");
-						return;
-					}
-					boolean isInt = Utility.isStringInt(txtEventkalenderId.getText());
-					if (!isInt) {
-						txtOutput.setText("Ange giltigt heltal");
-						return;
-					}
-					id = Integer.parseInt(txtEventkalenderId.getText());
-				}
-
-				TableModel model = null;
-				try {
-					if (selection.equals("Nation")) {
-						// Nation n = eventProxy.getNation(id);
-						model = new NationTableModel(controller.getNation(id));
-					} else if (selection.equals("Event")) {
-						model = new EventTableModel(controller.getEvent(id));
-					} else if (selection.equals("Person")) {
-						model = new PersonTableModel(controller.getPerson(id));
-					} else if (selection.equals("Nationer")) {
-						model = new NationTableModel(controller.getNations());
-					} else if (selection.equals("Events")) {
-						model = new EventTableModel(controller.getEvents());
-					} else if (selection.equals("Personer")) {
-						model = new PersonTableModel(controller.getPersons());
-					}
-				} catch (Exception ex) {
-					txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
-				}
-				if (model != null) {
-					tblEventkalender.setModel(model);
-				}
-			}
-		});
-		pnlEventkalender.add(btnEventkalenderGetData);
-		JLabel lblEventkalenderChoice = new JLabel("Var god välj:");
-		lblEventkalenderChoice.setBounds(209, 34, 99, 16);
-		lblEventkalenderChoice.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		pnlEventkalender.add(lblEventkalenderChoice);
-
-		txtEventkalenderId = new JTextField();
-		txtEventkalenderId.setBounds(310, 79, 86, 20);
-		pnlEventkalender.add(txtEventkalenderId);
-		txtEventkalenderId.setColumns(10);
-
-		JLabel lblEventkalenderId = new JLabel("ID nr:");
-		lblEventkalenderId.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblEventkalenderId.setBounds(209, 81, 57, 14);
-		pnlEventkalender.add(lblEventkalenderId);
-
-		JScrollPane scpnEventkalender = new JScrollPane();
-		scpnEventkalender.setBounds(0, 151, 778, 267);
-		pnlEventkalender.add(scpnEventkalender);
-
-		tblEventkalender = new JTable();
-		scpnEventkalender.setViewportView(tblEventkalender);
+								TableModel model = null;
+								try {
+									if (selection.equals("Nation")) {
+										// Nation n = eventProxy.getNation(id);
+										model = new NationTableModel(controller.getNation(id));
+									} else if (selection.equals("Event")) {
+										model = new EventTableModel(controller.getEvent(id));
+									} else if (selection.equals("Person")) {
+										model = new PersonTableModel(controller.getPerson(id));
+									} else if (selection.equals("Nationer")) {
+										model = new NationTableModel(controller.getNations());
+									} else if (selection.equals("Events")) {
+										model = new EventTableModel(controller.getEvents());
+									} else if (selection.equals("Personer")) {
+										model = new PersonTableModel(controller.getPersons());
+									}
+								} catch (Exception ex) {
+									txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
+								}
+								if (model != null) {
+									tblEventkalender.setModel(model);
+								}
+							}
+						});
 
 		JPanel pnlCronus = new JPanel();
-		tbpnParent.addTab("Databas ws", null, pnlCronus, null);
+		tbpnParent.addTab("Cronus ws", null, pnlCronus, null);
 		pnlCronus.setLayout(null);
 
-		JTabbedPane tbpnWS = new JTabbedPane(JTabbedPane.TOP);
-		tbpnWS.setBounds(0, 0, 778, 418);
-		pnlCronus.add(tbpnWS);
+		JTabbedPane tbpnCronus = new JTabbedPane(JTabbedPane.TOP);
+		tbpnCronus.setBounds(0, 0, 778, 418);
+		pnlCronus.add(tbpnCronus);
 
 		JPanel pnlDataWS = new JPanel();
-		tbpnWS.addTab("Data", null, pnlDataWS, null);
+		tbpnCronus.addTab("Data", null, pnlDataWS, null);
 		pnlDataWS.setLayout(null);
 
 		final JComboBox cmbDataWS = new JComboBox(CBData);
@@ -240,7 +280,7 @@ public class App {
 		 pnlDataWS.add(lblDataWSChoose);
 
 		JPanel pnlMetadataWS = new JPanel();
-		tbpnWS.addTab("Metadata", null, pnlMetadataWS, null);
+		tbpnCronus.addTab("Metadata", null, pnlMetadataWS, null);
 		pnlMetadataWS.setLayout(null);
 
 		final JComboBox cmbMetadataWS = new JComboBox(cmbMetadataContents);
@@ -303,7 +343,7 @@ public class App {
 		});
 
 		JPanel pnlEmployeeWS = new JPanel();
-		tbpnWS.addTab("Employee", null, pnlEmployeeWS, null);
+		tbpnCronus.addTab("Employee", null, pnlEmployeeWS, null);
 		pnlEmployeeWS.setLayout(null);
 		
 		JScrollPane scpnEmployeeWS = new JScrollPane();
@@ -330,32 +370,32 @@ public class App {
 		scpnEmployeeWS.setViewportView(tblEmployeeWS);
 		
 		JLabel lblId = new JLabel("ID nr:");
-		lblId.setBounds(33, 122, 46, 14);
+		lblId.setBounds(33, 62, 46, 14);
 		lblId.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		pnlEmployeeWS.add(lblId);
 
 		JLabel lblFrnamn = new JLabel("Förnamn:");
-		lblFrnamn.setBounds(33, 60, 72, 14);
+		lblFrnamn.setBounds(33, 91, 72, 14);
 		lblFrnamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		pnlEmployeeWS.add(lblFrnamn);
 
 		JLabel lblEfternamn = new JLabel("Efternamn:");
-		lblEfternamn.setBounds(33, 91, 75, 14);
+		lblEfternamn.setBounds(33, 122, 75, 14);
 		lblEfternamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		pnlEmployeeWS.add(lblEfternamn);
 
 		txtEmployeeId = new JTextField();
-		txtEmployeeId.setBounds(115, 120, 97, 20);
+		txtEmployeeId.setBounds(115, 60, 97, 20);
 		txtEmployeeId.setColumns(10);
 		pnlEmployeeWS.add(txtEmployeeId);
 
 		txtEmployeeFörnamn = new JTextField();
-		txtEmployeeFörnamn.setBounds(115, 58, 97, 20);
+		txtEmployeeFörnamn.setBounds(115, 89, 97, 20);
 		txtEmployeeFörnamn.setColumns(10);
 		pnlEmployeeWS.add(txtEmployeeFörnamn);
 
 		txtEmployeeEfternamn = new JTextField();
-		txtEmployeeEfternamn.setBounds(115, 89, 97, 20);
+		txtEmployeeEfternamn.setBounds(115, 120, 97, 20);
 		txtEmployeeEfternamn.setColumns(10);
 		pnlEmployeeWS.add(txtEmployeeEfternamn);
 		

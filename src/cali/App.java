@@ -307,10 +307,15 @@ public class App {
 		pnlEmployeeWS.setLayout(null);
 		
 		JScrollPane scpnEmployeeWS = new JScrollPane();
-		scpnEmployeeWS.setBounds(329, 50, 444, 340);
+		scpnEmployeeWS.setBounds(283, 50, 490, 340);
 		pnlEmployeeWS.add(scpnEmployeeWS);
 		
-		tblEmployeeWS = new JTable();
+		try {
+			tblEmployeeWS = new JTable(new EmployeeTableModel(controller.getEmployees()));
+		} catch (RemoteException e3) {
+			txtOutput.setText(ExceptionHandler.getErrorMessage(e3));
+		}
+		
 		tblEmployeeWS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -386,7 +391,7 @@ public class App {
 		});
 		
 		JButton btnDeleteEmployee = new JButton("Radera");
-		btnDeleteEmployee.setBounds(522, 11, 97, 28);
+		btnDeleteEmployee.setBounds(480, 11, 97, 28);
 		pnlEmployeeWS.add(btnDeleteEmployee);
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -439,7 +444,7 @@ public class App {
 			}
 				
 		});
-		JLabel lblNewLabel = new JLabel("Användare");
+		JLabel lblNewLabel = new JLabel("Anställda");
 		lblNewLabel.setBounds(68, 21, 97, 20);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		pnlEmployeeWS.add(lblNewLabel);

@@ -133,5 +133,7 @@ public class Controller {
 	public Employee[] getEmployees() throws RemoteException {
 		return cronusProxy.getEmployees();
 	}
-	
+	public Employee getEmployee(String no) throws RemoteException {
+		return cronusProxy.getEmployee(no);
+	}
 }

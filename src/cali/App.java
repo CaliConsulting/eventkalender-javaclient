@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -309,8 +311,18 @@ public class App {
 		pnlEmployeeWS.add(scpnEmployeeWS);
 		
 		tblEmployeeWS = new JTable();
+		tblEmployeeWS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int rs = tblEmployeeWS.getSelectedRow();
+				if (rs > -1) {
+					txtEmployeeId.setText(tblEmployeeWS.getValueAt(rs, 0).toString());
+					txtEmployeeFörnamn.setText(tblEmployeeWS.getValueAt(rs, 2).toString());
+					txtEmployeeEfternamn.setText(tblEmployeeWS.getValueAt(rs, 3).toString());
+				}
+			}
+		});
 		scpnEmployeeWS.setViewportView(tblEmployeeWS);
-
 		
 		JLabel lblId = new JLabel("ID nr:");
 		lblId.setBounds(33, 122, 46, 14);
@@ -342,32 +354,35 @@ public class App {
 		txtEmployeeEfternamn.setColumns(10);
 		pnlEmployeeWS.add(txtEmployeeEfternamn);
 		
-		
 		JButton btnAddEmployee = new JButton("Lägg till");
 		btnAddEmployee.setBounds(115, 151, 97, 28);
 		pnlEmployeeWS.add(btnAddEmployee);
 		btnAddEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TableModel model = null;
 				txtOutput.setText("");
 				String no = txtEmployeeId.getText();
 				String firstName = txtEmployeeFörnamn.getText();
 				String lastName = txtEmployeeEfternamn.getText();
 				try {
-					controller.addEmployee(no, firstName, lastName);
-					Employee emp = new Employee();
-					emp.setNo(no);
-					emp.setFirstName(firstName);
-					emp.setLastName(lastName);
-					model = new EmployeeTableModel(emp);
+					if(controller.getEmployee(no) == null) {
+						controller.addEmployee(no, firstName, lastName);
+				} else {
+					txtOutput.setText("Var god välj ett unikt ID nr");
+				}
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if (model != null) {
-					tblEmployeeWS.setModel(model);
+				TableModel m = null;
+				try {
+					m = new EmployeeTableModel(controller.getEmployees());
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
 				}
-			}	
+				if (m != null) {
+					tblEmployeeWS.setModel(m);
+				}
+			}
+				
 		});
 		
 		JButton btnDeleteEmployee = new JButton("Radera");
@@ -384,8 +399,7 @@ public class App {
 				} catch (RemoteException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
-				}
-						
+				}	
 				TableModel m = null;
 				try {
 					m = new EmployeeTableModel(controller.getEmployees());
@@ -402,24 +416,27 @@ public class App {
 		pnlEmployeeWS.add(btnUpdateEmployee);
 		btnUpdateEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = tblEmployeeWS.getSelectedRow();
-				TableModel model = null;
 				txtOutput.setText("");
+				
 				String no = txtEmployeeId.getText();
 				String firstName = txtEmployeeFörnamn.getText();
 				String lastName = txtEmployeeEfternamn.getText();
 				try {
 				controller.updateEmployee(no, firstName, lastName);
-				Employee emp = new Employee();
-				emp.setNo(no);
-				emp.setFirstName(firstName);
-				emp.setLastName(lastName);
-			
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
+				} catch (RemoteException e1) {
 				e1.printStackTrace();
+				}
+				TableModel m = null;
+				try {
+					m = new EmployeeTableModel(controller.getEmployees());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if (m != null) {
+					tblEmployeeWS.setModel(m);
+				}
 			}
-		}
 				
 		});
 		JLabel lblNewLabel = new JLabel("Användare");

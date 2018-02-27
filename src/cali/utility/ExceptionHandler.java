@@ -16,14 +16,6 @@ public class ExceptionHandler {
 
 	public static String getErrorMessage(Exception e) {
 		String message = "";
-
-		message = getGenericErrorMessage(e);
-
-		return message;
-	}
-
-	private static String getGenericErrorMessage(Exception e) {
-		String message = "";
 		if (e instanceof NumberFormatException) {
 			message = "Fältet accepterar inte denna indata, var god kontrollera formattering på tal och text";
 		} else if (e instanceof NullPointerException) {

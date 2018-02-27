@@ -22,7 +22,8 @@ public class EmployeeTableModel extends AbstractTableModel {
 
 		for (int i = 0; i < this.data.length; i++) {
 			Employee e = data[i];
-			this.data[i] = new String[] { String.valueOf(e.getNo()), String.valueOf(e.getSex()), e.getFirstName(), e.getLastName()};
+			this.data[i] = new String[] { String.valueOf(e.getNo()), String.valueOf(e.getSex()), e.getFirstName(),
+					e.getLastName() };
 		}
 	}
 

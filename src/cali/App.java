@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import cali.controller.Controller;
@@ -341,7 +342,7 @@ public class App {
 		txtEmployeeEfternamn.setColumns(10);
 		pnlEmployeeWS.add(txtEmployeeEfternamn);
 		
-		Object [] column = new Object [4];
+		
 		JButton btnAddEmployee = new JButton("Lägg till");
 		btnAddEmployee.setBounds(115, 151, 97, 28);
 		pnlEmployeeWS.add(btnAddEmployee);
@@ -375,35 +376,44 @@ public class App {
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
-				int rowIndex = tblEmployeeWS.getSelectedRow();
-				String no = (String) tblEmployeeWS.getValueAt(rowIndex, 0);
+				
+				int i = tblEmployeeWS.getSelectedRow();
+				String no = (String) tblEmployeeWS.getValueAt(i, 0);
 				try {
-					if (rowIndex >= 0) {
-						controller.deleteEmployee(no);
-					} else {
-						System.out.println("Det finns ingen rad att radera");
-					}
+					controller.deleteEmployee(no);
+				} catch (RemoteException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+						
+				TableModel m = null;
+				try {
+					m = new EmployeeTableModel(controller.getEmployees());
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-					
-				}	
-			});
+				tblEmployeeWS.setModel(m);
+			}
+		});
 		
 		JButton btnUpdateEmployee = new JButton("Uppdatera");
 		btnUpdateEmployee.setBounds(115, 195, 97, 28);
 		pnlEmployeeWS.add(btnUpdateEmployee);
 		btnUpdateEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
 				int i = tblEmployeeWS.getSelectedRow();
 				TableModel model = null;
 				txtOutput.setText("");
 				String no = txtEmployeeId.getText();
 				String firstName = txtEmployeeFörnamn.getText();
 				String lastName = txtEmployeeEfternamn.getText();
+				try {
 				controller.updateEmployee(no, firstName, lastName);
+				Employee emp = new Employee();
+				emp.setNo(no);
+				emp.setFirstName(firstName);
+				emp.setLastName(lastName);
 			
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block

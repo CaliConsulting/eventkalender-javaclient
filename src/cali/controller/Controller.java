@@ -3,6 +3,7 @@ package cali.controller;
 import java.rmi.RemoteException;
 
 import cronus.cali.CronusServiceSoapProxy;
+import cronus.cali.Employee;
 import cronus.cali.SerializableKeyValuePairOfStringString;
 import eventkalender.cali.Event;
 import eventkalender.cali.EventkalenderServiceSoapProxy;
@@ -129,4 +130,8 @@ public class Controller {
 	public void deleteEmployee(String no) throws RemoteException {
 		cronusProxy.deleteEmployee(no);
 	}
+	public Employee[] getEmployees() throws RemoteException {
+		return cronusProxy.getEmployees();
+	}
+	
 }

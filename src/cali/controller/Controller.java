@@ -124,16 +124,28 @@ public class Controller {
 	public void addEmployee(String no, String firstName, String lastName) throws RemoteException {
 		cronusProxy.addEmployee( no, firstName, lastName);
 	}
+	
 	public void updateEmployee(String no, String firstName, String lastName) throws RemoteException {
 		cronusProxy.updateEmployee(no, firstName, lastName);
 	}
+	
 	public void deleteEmployee(String no) throws RemoteException {
 		cronusProxy.deleteEmployee(no);
 	}
+	
 	public Employee[] getEmployees() throws RemoteException {
 		return cronusProxy.getEmployees();
 	}
+	
 	public Employee getEmployee(String no) throws RemoteException {
 		return cronusProxy.getEmployee(no);
+	}
+	
+	public String[] getFiles() throws RemoteException {
+		return eventProxy.getFiles();
+	}
+	
+	public String getFile(String path) throws RemoteException {
+		return eventProxy.getFile(path);
 	}
 }

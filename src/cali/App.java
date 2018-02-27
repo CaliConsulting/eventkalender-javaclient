@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import cali.controller.Controller;
@@ -32,68 +31,70 @@ import cali.model.SerializableKeyValuePairTableModel;
 import cali.model.StringTableModel;
 import cali.utility.ExceptionHandler;
 import cali.utility.Utility;
-import cronus.cali.Employee;
 import javax.swing.JTextPane;
 
 public class App {
 
 	private Controller controller;
 
+	private String[] cmbEventkalenderContents;
+	private String[] cmbMetadataContents;
+	private String[] cmbDataContents;
+	
 	private JFrame frame;
-	private String NameC;
-	private String NameCA;
-	private String[] cmbEventkalenderContents = { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
-	private String[] cmbMetadataContents = { "Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index",
-			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
-			"Kolumner för anställningstabeller", "Anställningssetup" };
-	private String[] CBData = { "Anställda", "Sjukaste personen", "Sjukaste personen år 2004-2005",
-			"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
-			"Anställningssetup" };
-
-	private JComboBox J = new JComboBox(cmbEventkalenderContents);
-
-	private JButton B = new JButton("Hämta");
-	private JTextField txtEventkalenderId;
+	
+	private JPanel pnlCronus;
+	private JPanel pnlDataWS;
+	private JPanel pnlEmployeeWS;
+	private JPanel pnlEventkalender;
+	private JPanel pnlGetCollections;
+	private JPanel pnlGetFile;
+	private JPanel pnlMetadataWS;
+	
+	private JTabbedPane tbpnCronus;
+	private JTabbedPane tbpnEventkalender;
+	private JTabbedPane tbpnParent;
+	
+	private JLabel lblChooseFile;
+	private JLabel lblDataWSChoose;
+	private JLabel lblEventkalenderChoice;
+	private JLabel lblEventkalenderId;
+	private JLabel lblEmployees;
+	private JLabel lblEmployeeId;
+	private JLabel lblEmployeeFirstname;
+	private JLabel lblEmployeeLastname;
+	private JLabel lblMetadataWSChoose;
+	
+	private JComboBox cmbDataWS;
+	private JComboBox cmbEventkalenderChoice;
+	private JComboBox cmbMetadataWS;
+	
+	private JButton btnAddEmployee;
+	private JButton btnDeleteEmployee;
+	private JButton btnEventkalenderGetData;
+	private JButton btnGetDataWS;
+	private JButton btnGetFile;
+	private JButton btnGetMetadataWS;
+	private JButton btnUpdateEmployee;
+	
 	private JTextField txtEmployeeId;
 	private JTextField txtEmployeeFirstname;
 	private JTextField txtEmployeeLastname;
-	private JTable tblDataWS;
-	private JTable tblMetadataWS;
-	private JTable tblEventkalender;
+	private JTextField txtEventkalenderId;
 	private JTextField txtOutput;
-	private JTable tblEmployeeWS;
-	private JTabbedPane tbpnParent;
-	private JPanel pnlEventkalender;
-	private JTabbedPane tbpnEventkalender;
-	private JPanel pnlGetFile;
-	private JPanel pnlGetCollections;
-	private JComboBox cmbEventkalenderChoice;
-	private JButton btnEventkalenderGetData;
-	private JLabel lblEventkalenderChoice;
-	private JLabel lblEventkalenderId;
-	private JScrollPane scpnEventkalender;
-	private JPanel pnlCronus;
-	private JTabbedPane tbpnCronus;
-	private JPanel pnlDataWS;
-	private JComboBox cmbDataWS;
-	private JScrollPane scpnDataWS;
-	private JButton btnDataWS;
-	private JLabel lblDataWSChoose;
-	private JPanel pnlMetadataWS;
-	private JComboBox cmbMetadataWS;
-	private JScrollPane scpnMetadataWS;
-	private JButton btnMetadataWS;
-	private JLabel lblMetadataWSChoose;
-	private JPanel pnlEmployeeWS;
-	private JScrollPane scpnEmployeeWS;
-	private JLabel lblId;
-	private JLabel lblFrnamn;
-	private JLabel lblEfternamn;
-	private JButton btnAddEmployee;
-	private JButton btnDeleteEmployee;
-	private JButton btnUpdateEmployee;
-	private JLabel lblEmployees;
 	private JTextField txtFilePath;
+	
+	private JTextPane txtFileContent;
+
+	private JScrollPane scpnDataWS;
+	private JScrollPane scpnEventkalender;
+	private JScrollPane scpnEmployeeWS;
+	private JScrollPane scpnMetadataWS;
+	
+	private JTable tblDataWS;
+	private JTable tblEmployeeWS;
+	private JTable tblEventkalender;
+	private JTable tblMetadataWS;
 
 	/**
 	 * Launch the application.
@@ -116,6 +117,16 @@ public class App {
 	 */
 	public App() {
 		controller = new Controller();
+		
+		cmbEventkalenderContents = new String[] { "Nation", "Nationer", "Person", "Personer", "Event", "Events" };
+		cmbMetadataContents = new String[] { "Anställda", "Tabeller", "Tabellbegränsningar", "Nycklar", "Index",
+				"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
+				"Kolumner för anställningstabeller", "Anställningssetup" };
+		cmbDataContents = new String[] { "Anställda", "Sjukaste personen", "Sjukaste personen år 2004-2005",
+					"Anställningsstatistik", "Anställningsrelationer", "Anställningskvalifikationer", "Anställningsfrånvaro",
+					"Anställningssetup" };
+		
+		
 
 		initialize();
 	}
@@ -145,12 +156,12 @@ public class App {
 		tbpnEventkalender.addTab("Hämta fil", null, pnlGetFile, null);
 		pnlGetFile.setLayout(null);
 		
-		JTextPane txtFileContent = new JTextPane();
+		txtFileContent = new JTextPane();
 		txtFileContent.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtFileContent.setBounds(0, 109, 773, 281);
 		pnlGetFile.add(txtFileContent);
 		
-		JButton btnGetFile = new JButton("Hämta");
+		btnGetFile = new JButton("Hämta");
 		btnGetFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtOutput.setText("");
@@ -175,7 +186,7 @@ public class App {
 		btnGetFile.setBounds(326, 64, 110, 30);
 		pnlGetFile.add(btnGetFile);
 		
-		JLabel lblChooseFile = new JLabel("Filnamn: ");
+		lblChooseFile = new JLabel("Filnamn: ");
 		lblChooseFile.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblChooseFile.setBounds(246, 23, 79, 17);
 		pnlGetFile.add(lblChooseFile);
@@ -195,28 +206,6 @@ public class App {
 
 		btnEventkalenderGetData = new JButton("Hämta");
 		btnEventkalenderGetData.setBounds(329, 92, 110, 30);
-		pnlGetCollections.add(btnEventkalenderGetData);
-		lblEventkalenderChoice = new JLabel("Var god välj:");
-		lblEventkalenderChoice.setBounds(216, 14, 79, 17);
-		pnlGetCollections.add(lblEventkalenderChoice);
-		lblEventkalenderChoice.setFont(new Font("Times New Roman", Font.BOLD, 14));
-
-		txtEventkalenderId = new JTextField();
-		txtEventkalenderId.setBounds(305, 59, 86, 20);
-		pnlGetCollections.add(txtEventkalenderId);
-		txtEventkalenderId.setColumns(10);
-
-		lblEventkalenderId = new JLabel("ID nr:");
-		lblEventkalenderId.setBounds(256, 60, 39, 17);
-		pnlGetCollections.add(lblEventkalenderId);
-		lblEventkalenderId.setFont(new Font("Times New Roman", Font.BOLD, 14));
-
-		scpnEventkalender = new JScrollPane();
-		scpnEventkalender.setBounds(0, 133, 773, 257);
-		pnlGetCollections.add(scpnEventkalender);
-
-		tblEventkalender = new JTable();
-		scpnEventkalender.setViewportView(tblEventkalender);
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -234,7 +223,6 @@ public class App {
 					}
 					id = Integer.parseInt(txtEventkalenderId.getText());
 				}
-
 				try {
 					TableModel model = null;
 					if (selection.equals("Nation")) {
@@ -257,6 +245,29 @@ public class App {
 				}
 			}
 		});
+		pnlGetCollections.add(btnEventkalenderGetData);
+		
+		lblEventkalenderChoice = new JLabel("Var god välj:");
+		lblEventkalenderChoice.setBounds(216, 14, 79, 17);
+		lblEventkalenderChoice.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		pnlGetCollections.add(lblEventkalenderChoice);
+
+		txtEventkalenderId = new JTextField();
+		txtEventkalenderId.setBounds(305, 59, 86, 20);
+		pnlGetCollections.add(txtEventkalenderId);
+		txtEventkalenderId.setColumns(10);
+
+		lblEventkalenderId = new JLabel("ID nr:");
+		lblEventkalenderId.setBounds(256, 60, 39, 17);
+		lblEventkalenderId.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		pnlGetCollections.add(lblEventkalenderId);
+
+		scpnEventkalender = new JScrollPane();
+		scpnEventkalender.setBounds(0, 133, 773, 257);
+		pnlGetCollections.add(scpnEventkalender);
+
+		tblEventkalender = new JTable();
+		scpnEventkalender.setViewportView(tblEventkalender);
 
 		pnlCronus = new JPanel();
 		tbpnParent.addTab("Cronus ws", null, pnlCronus, null);
@@ -270,7 +281,7 @@ public class App {
 		tbpnCronus.addTab("Data", null, pnlDataWS, null);
 		pnlDataWS.setLayout(null);
 
-		cmbDataWS = new JComboBox(CBData);
+		cmbDataWS = new JComboBox(cmbDataContents);
 		cmbDataWS.setBounds(284, 23, 215, 26);
 		pnlDataWS.add(cmbDataWS);
 
@@ -281,13 +292,12 @@ public class App {
 		tblDataWS = new JTable();
 		scpnDataWS.setViewportView(tblDataWS);
 
-		btnDataWS = new JButton("Hämta");
-		btnDataWS.setBounds(331, 60, 110, 30);
-		btnDataWS.addActionListener(new ActionListener() {
+		btnGetDataWS = new JButton("Hämta");
+		btnGetDataWS.setBounds(331, 60, 110, 30);
+		btnGetDataWS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
 				String selection = (String) cmbDataWS.getSelectedItem();
-				
 				try {
 					TableModel model = null;
 					if (selection.equals("Anställda")) {
@@ -313,7 +323,7 @@ public class App {
 				}
 			}
 		});
-		pnlDataWS.add(btnDataWS);
+		pnlDataWS.add(btnGetDataWS);
 
 		lblDataWSChoose = new JLabel("Var god välj:");
 		lblDataWSChoose.setBounds(184, 25, 90, 20);
@@ -335,15 +345,14 @@ public class App {
 		tblMetadataWS = new JTable();
 		scpnMetadataWS.setViewportView(tblMetadataWS);
 
-		btnMetadataWS = new JButton("Hämta");
-		btnMetadataWS.setBounds(331, 60, 110, 30);
-		pnlMetadataWS.add(btnMetadataWS);
+		btnGetMetadataWS = new JButton("Hämta");
+		btnGetMetadataWS.setBounds(331, 60, 110, 30);
+		pnlMetadataWS.add(btnGetMetadataWS);
 
 		lblMetadataWSChoose = new JLabel("Var god välj:");
 		lblMetadataWSChoose.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMetadataWSChoose.setBounds(184, 25, 90, 20);
-		pnlMetadataWS.add(lblMetadataWSChoose);
-		btnMetadataWS.addActionListener(new ActionListener() {
+		btnGetMetadataWS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
 				String selection = (String) cmbMetadataWS.getSelectedItem();
@@ -378,6 +387,7 @@ public class App {
 				}
 			}
 		});
+		pnlMetadataWS.add(lblMetadataWSChoose);
 
 		pnlEmployeeWS = new JPanel();
 		tbpnCronus.addTab("Employee", null, pnlEmployeeWS, null);
@@ -405,20 +415,20 @@ public class App {
 		});
 		scpnEmployeeWS.setViewportView(tblEmployeeWS);
 
-		lblId = new JLabel("ID nr:");
-		lblId.setBounds(33, 62, 46, 14);
-		lblId.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		pnlEmployeeWS.add(lblId);
+		lblEmployeeId = new JLabel("ID nr:");
+		lblEmployeeId.setBounds(33, 62, 46, 14);
+		lblEmployeeId.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		pnlEmployeeWS.add(lblEmployeeId);
 
-		lblFrnamn = new JLabel("Förnamn:");
-		lblFrnamn.setBounds(33, 91, 72, 14);
-		lblFrnamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		pnlEmployeeWS.add(lblFrnamn);
+		lblEmployeeFirstname = new JLabel("Förnamn:");
+		lblEmployeeFirstname.setBounds(33, 91, 72, 14);
+		lblEmployeeFirstname.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		pnlEmployeeWS.add(lblEmployeeFirstname);
 
-		lblEfternamn = new JLabel("Efternamn:");
-		lblEfternamn.setBounds(33, 122, 75, 14);
-		lblEfternamn.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		pnlEmployeeWS.add(lblEfternamn);
+		lblEmployeeLastname = new JLabel("Efternamn:");
+		lblEmployeeLastname.setBounds(33, 122, 75, 14);
+		lblEmployeeLastname.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		pnlEmployeeWS.add(lblEmployeeLastname);
 
 		txtEmployeeId = new JTextField();
 		txtEmployeeId.setBounds(115, 60, 97, 20);
@@ -437,7 +447,6 @@ public class App {
 
 		btnAddEmployee = new JButton("Lägg till");
 		btnAddEmployee.setBounds(115, 151, 97, 28);
-		pnlEmployeeWS.add(btnAddEmployee);
 		btnAddEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -457,10 +466,10 @@ public class App {
 				}
 			}
 		});
-
+		pnlEmployeeWS.add(btnAddEmployee);
+		
 		btnDeleteEmployee = new JButton("Radera");
 		btnDeleteEmployee.setBounds(480, 11, 97, 28);
-		pnlEmployeeWS.add(btnDeleteEmployee);
 		btnDeleteEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -479,10 +488,10 @@ public class App {
 				}
 			}
 		});
+		pnlEmployeeWS.add(btnDeleteEmployee);
 
 		btnUpdateEmployee = new JButton("Uppdatera");
 		btnUpdateEmployee.setBounds(115, 195, 97, 28);
-		pnlEmployeeWS.add(btnUpdateEmployee);
 		btnUpdateEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtOutput.setText("");
@@ -498,6 +507,8 @@ public class App {
 				}
 			}
 		});
+		pnlEmployeeWS.add(btnUpdateEmployee);
+		
 		lblEmployees = new JLabel("Anställda");
 		lblEmployees.setBounds(68, 21, 97, 20);
 		lblEmployees.setFont(new Font("Times New Roman", Font.BOLD, 16));

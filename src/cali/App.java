@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +33,9 @@ import cali.model.SerializableKeyValuePairTableModel;
 import cali.model.StringTableModel;
 import cali.utility.ExceptionHandler;
 import cali.utility.Utility;
+import eventkalender.cali.Event;
+import eventkalender.cali.Nation;
+import eventkalender.cali.Person;
 
 public class App {
 
@@ -66,13 +71,13 @@ public class App {
 
 	private JComboBox cmbDataWS;
 	private JComboBox cmbEventkalenderChoice;
+	private JComboBox cbxFiles;
 	private JComboBox cmbMetadataWS;
 
 	private JButton btnAddEmployee;
 	private JButton btnDeleteEmployee;
 	private JButton btnEventkalenderGetData;
 	private JButton btnGetDataWS;
-	private JButton btnGetFile;
 	private JButton btnGetMetadataWS;
 	private JButton btnUpdateEmployee;
 
@@ -81,7 +86,6 @@ public class App {
 	private JTextField txtEmployeeLastname;
 	private JTextField txtEventkalenderId;
 	private JTextField txtOutput;
-	private JTextField txtFilePath;
 
 	private JTextPane txtFileContent;
 
@@ -155,43 +159,33 @@ public class App {
 
 		txtFileContent = new JTextPane();
 		txtFileContent.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtFileContent.setBounds(0, 109, 773, 281);
+		txtFileContent.setBounds(0, 74, 773, 316);
 		pnlGetFile.add(txtFileContent);
 
-		btnGetFile = new JButton("Hämta");
-		btnGetFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				txtOutput.setText("");
-				String path = txtFilePath.getText();
-				if ("".equals(path)) {
-					txtOutput.setText("Var god ange en filsökväg");
-					return;
-				}
+		lblChooseFile = new JLabel("Filnamn: ");
+		lblChooseFile.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblChooseFile.setBounds(246, 23, 79, 17);
+		pnlGetFile.add(lblChooseFile);
+		
+		try {
+			cbxFiles = new JComboBox(controller.getFiles());
+			cbxFiles.setSelectedIndex(-1);
+		} catch (RemoteException ex) {
+			txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
+		}
+		cbxFiles.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
 				try {
-					String[] files = controller.getFiles();
-					List<String> filesAsList = Arrays.asList(files);
-					if (!filesAsList.contains(path)) {
-						txtOutput.setText("Fil med sökväg " + path + " existerar inte");
-						return;
-					}
+					String path = cbxFiles.getSelectedItem().toString();
 					txtFileContent.setText(controller.getFile(path));
 				} catch (RemoteException ex) {
 					txtOutput.setText(ExceptionHandler.getErrorMessage(ex));
 				}
 			}
 		});
-		btnGetFile.setBounds(326, 64, 110, 30);
-		pnlGetFile.add(btnGetFile);
-
-		lblChooseFile = new JLabel("Filnamn: ");
-		lblChooseFile.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblChooseFile.setBounds(246, 23, 79, 17);
-		pnlGetFile.add(lblChooseFile);
-
-		txtFilePath = new JTextField();
-		txtFilePath.setBounds(326, 22, 162, 20);
-		pnlGetFile.add(txtFilePath);
-		txtFilePath.setColumns(10);
+		cbxFiles.setBounds(324, 23, 187, 22);
+		pnlGetFile.add(cbxFiles);
 
 		pnlGetCollections = new JPanel();
 		tbpnEventkalender.addTab("Hämta listor", null, pnlGetCollections, null);
@@ -204,7 +198,7 @@ public class App {
 		btnEventkalenderGetData = new JButton("Hämta");
 		btnEventkalenderGetData.setBounds(329, 92, 110, 30);
 		btnEventkalenderGetData.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent ev) {
 				txtOutput.setText("");
 				String selection = (String) cmbEventkalenderChoice.getSelectedItem();
 				int id = -1;
@@ -223,12 +217,26 @@ public class App {
 				try {
 					TableModel model = null;
 					if (selection.equals("Nation")) {
-						// Nation n = eventProxy.getNation(id);
-						model = new NationTableModel(controller.getNation(id));
+						Nation n = controller.getNation(id);
+						if (n == null) {
+							txtOutput.setText("Nation med ID" + id + " finns inte");
+							return;
+						}
+						model = new NationTableModel(n);
 					} else if (selection.equals("Event")) {
-						model = new EventTableModel(controller.getEvent(id));
+						Event e = controller.getEvent(id);
+						if (e == null) {
+							txtOutput.setText("Event med ID" + id + " finns inte");
+							return;
+						}
+						model = new EventTableModel(e);
 					} else if (selection.equals("Person")) {
-						model = new PersonTableModel(controller.getPerson(id));
+						Person p = controller.getPerson(id);
+						if (p == null) {
+							txtOutput.setText("Person med ID" + id + " finns inte");
+							return;
+						}
+						model = new PersonTableModel(p);
 					} else if (selection.equals("Nationer")) {
 						model = new NationTableModel(controller.getNations());
 					} else if (selection.equals("Events")) {

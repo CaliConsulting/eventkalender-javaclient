@@ -92,6 +92,7 @@ public class App {
 	private JScrollPane scpnDataWS;
 	private JScrollPane scpnEventkalender;
 	private JScrollPane scpnEmployeeWS;
+	private JScrollPane scpnFileContent;
 	private JScrollPane scpnMetadataWS;
 
 	private JTable tblDataWS;
@@ -156,11 +157,14 @@ public class App {
 		pnlGetFile = new JPanel();
 		tbpnEventkalender.addTab("Hämta fil", null, pnlGetFile, null);
 		pnlGetFile.setLayout(null);
+		
+		scpnFileContent = new JScrollPane();
+		scpnFileContent.setBounds(0, 74, 773, 316);
+		pnlGetFile.add(scpnFileContent);
 
 		txtFileContent = new JTextPane();
+		scpnFileContent.setViewportView(txtFileContent);
 		txtFileContent.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtFileContent.setBounds(0, 74, 773, 316);
-		pnlGetFile.add(txtFileContent);
 
 		lblChooseFile = new JLabel("Filnamn: ");
 		lblChooseFile.setFont(new Font("Times New Roman", Font.BOLD, 14));

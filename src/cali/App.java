@@ -450,6 +450,10 @@ public class App {
 				String no = txtEmployeeId.getText();
 				String firstName = txtEmployeeFirstname.getText();
 				String lastName = txtEmployeeLastname.getText();
+				if (Utility.isEmpty(no, firstName, lastName)) {
+					txtOutput.setText("Var god ange ID, förnamn och efternamn");
+					return;
+				}
 				try {
 					if (controller.getEmployee(no) == null) {
 						controller.addEmployee(no, firstName, lastName);
@@ -495,6 +499,10 @@ public class App {
 				String no = txtEmployeeId.getText();
 				String firstName = txtEmployeeFirstname.getText();
 				String lastName = txtEmployeeLastname.getText();
+				if (Utility.isEmpty(no, firstName, lastName)) {
+					txtOutput.setText("Var god ange ID, förnamn och efternamn");
+					return;
+				}
 				try {
 					controller.updateEmployee(no, firstName, lastName);
 					TableModel model = new EmployeeTableModel(controller.getEmployees());

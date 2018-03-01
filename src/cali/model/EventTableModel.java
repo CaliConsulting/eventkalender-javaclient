@@ -20,7 +20,7 @@ public class EventTableModel extends AbstractTableModel {
 	}
 
 	public EventTableModel(Event[] data) {
-		this.columnNames = new String[] { "Id", "Name", "Summary", "StartTime", "EndTime", "NationId" };
+		this.columnNames = new String[] { "Id", "Namn", "Beskrivning", "Start", "Slut", "NationId" };
 
 		this.data = new String[data.length][this.columnNames.length];
 

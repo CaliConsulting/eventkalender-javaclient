@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -166,7 +164,7 @@ public class App {
 		lblChooseFile.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblChooseFile.setBounds(246, 23, 79, 17);
 		pnlGetFile.add(lblChooseFile);
-		
+
 		try {
 			cbxFiles = new JComboBox(controller.getFiles());
 			cbxFiles.setSelectedIndex(-1);

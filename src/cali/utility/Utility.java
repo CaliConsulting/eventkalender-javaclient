@@ -65,7 +65,7 @@ public class Utility {
 		}
 		return false;
 	}
-	
+
 	public static boolean isEmpty(String... values) {
 		for (int i = 0; i < values.length; i++) {
 			String value = values[i];

@@ -16,13 +16,13 @@ public class EmployeeTableModel extends AbstractTableModel {
 	}
 
 	public EmployeeTableModel(Employee[] data) {
-		this.columnNames = new String[] { "Id", "Kön", "First Name", "Last Name" };
+		this.columnNames = new String[] { "Id", "Kön", "Förnamn", "Efternamn" };
 
 		this.data = new String[data.length][this.columnNames.length];
 
 		for (int i = 0; i < this.data.length; i++) {
 			Employee e = data[i];
-			this.data[i] = new String[] { String.valueOf(e.getNo()), String.valueOf(e.getSex()), e.getFirstName(),
+			this.data[i] = new String[] { e.getNo(), String.valueOf(e.getSex()), e.getFirstName(),
 					e.getLastName() };
 		}
 	}
